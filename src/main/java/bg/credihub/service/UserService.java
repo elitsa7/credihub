@@ -45,8 +45,7 @@ public class UserService {
 
         User user = modelMapper.map(userRegisterDTO, User.class);
         user.setPassword(passwordEncoder.encode(userRegisterDTO.getPassword()));
-        Role role = userRepository.count() == 0 ? Role.ADMIN : Role.USER;
-        user.setRole(role);
+        user.setRole(Role.USER);
 
         userRepository.save(user);
     }

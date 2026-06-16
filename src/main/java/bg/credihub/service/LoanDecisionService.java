@@ -55,6 +55,10 @@ public class LoanDecisionService {
         loanDecisionRepository.save(loanDecision);
     }
 
+    public LoanDecision getByApplicationId(UUID applicationId) {
+        return loanDecisionRepository.findByLoanApplicationId(applicationId).orElse(null);
+    }
+
     private void validatePendingApplication(LoanApplication loanApplication) {
         if (loanApplication.getStatus() != ApplicationStatus.PENDING) {
             throw new InvalidLoanApplicationException("Only pending application can be reviewed.");
