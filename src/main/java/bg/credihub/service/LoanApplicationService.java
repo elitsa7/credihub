@@ -1,0 +1,152 @@
+package bg.credihub.service;
+
+import bg.credihub.exception.InvalidLoanApplicationException;
+import bg.credihub.exception.InvalidLoanProductException;
+import bg.credihub.exception.LoanApplicationNotFoundException;
+import bg.credihub.exception.UnauthorizedActionException;
+import bg.credihub.model.dtos.LoanApplicationDTO;
+import bg.credihub.model.entities.LoanApplication;
+import bg.credihub.model.entities.LoanProduct;
+import bg.credihub.model.entities.User;
+import bg.credihub.model.enums.ApplicationStatus;
+import bg.credihub.repository.LoanApplicationRepository;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+@Service
+public class LoanApplicationService {
+    private final LoanApplicationRepository loanApplicationRepository;
+    private final UserService userService;
+    private final LoanProductService loanProductService;
+    private final ModelMapper modelMapper;
+
+    @Autowired
+    public LoanApplicationService(LoanApplicationRepository loanApplicationRepository, UserService userService, LoanProductService loanProductService, ModelMapper modelMapper) {
+        this.loanApplicationRepository = loanApplicationRepository;
+        this.userService = userService;
+        this.loanProductService = loanProductService;
+        this.modelMapper = modelMapper;
+    }
+
+    public void createLoanApplication(UUID userId, LoanApplicationDTO loanApplicationDTO) {
+        User user = userService.getById(userId);
+        LoanProduct loanProduct = loanProductService.getById(loanApplicationDTO.getLoanProductId());
+
+        if(loanApplicationRepository.existsByUserAndLoanProductAndStatus(user,loanProduct, ApplicationStatus.PENDING)){
+            throw new InvalidLoanApplicationException("You already have an application for this loan product");
+        }
+
+        validateLoanProductIsActive(loanProduct);
+        validateAmountAndPeriod(loanApplicationDTO, loanProduct);
+        validateMonthlyIncome(loanApplicationDTO);
+
+        LoanApplication loanApplication = modelMapper.map(loanApplicationDTO, LoanApplication.class);
+
+        loanApplication.setLoanProduct(loanProduct);
+        loanApplication.setUser(user);
+        loanApplication.setStatus(ApplicationStatus.PENDING);
+        loanApplication.setCreatedAt(LocalDateTime.now());
+        applyCalculatedValues(loanApplication, loanProduct);
+
+        loanApplicationRepository.save(loanApplication);
+    }
+
+    public void updateLoanApplication(UUID applicationId, UUID userId, LoanApplicationDTO loanApplicationDTO) {
+        LoanApplication loanApplication = getById(applicationId);
+
+        validateOwner(loanApplication, userId);
+
+        validatePendingStatus(loanApplication);
+
+        LoanProduct loanProduct = loanProductService.getById(loanApplicationDTO.getLoanProductId());
+        validateLoanProductIsActive(loanProduct);
+        validateAmountAndPeriod(loanApplicationDTO, loanProduct);
+
+        modelMapper.map(loanApplicationDTO, loanApplication);
+
+        loanApplication.setLoanProduct(loanProduct);
+        applyCalculatedValues(loanApplication, loanProduct);
+
+        loanApplicationRepository.save(loanApplication);
+    }
+
+    public void cancelLoanApplication(UUID applicationId, UUID userId) {
+        LoanApplication loanApplication = getById(applicationId);
+
+        validateOwner(loanApplication, userId);
+        validatePendingStatus(loanApplication);
+
+        loanApplication.setStatus(ApplicationStatus.CANCELLED);
+        loanApplicationRepository.save(loanApplication);
+    }
+
+    public LoanApplication getById(UUID id) {
+        return loanApplicationRepository.findById(id)
+                .orElseThrow(() -> new LoanApplicationNotFoundException("LoanApplication with id " + id + " not found."));
+    }
+
+
+    private void validateLoanProductIsActive(LoanProduct loanProduct) {
+        if (!loanProduct.isActive()) {
+            throw new InvalidLoanProductException("Loan product is inactive.");
+        }
+    }
+
+    private void validateMonthlyIncome(LoanApplicationDTO loanApplicationDTO) {
+        if(loanApplicationDTO.getMonthlyIncome().compareTo(BigDecimal.valueOf(1000)) < 0) {
+            throw new InvalidLoanApplicationException(
+                    "Minimum monthly income is 620 EUR.");
+        }
+    }
+
+    private void validateOwner(LoanApplication loanApplication, UUID userId) {
+        if (!loanApplication.getUser().getId().equals(userId)) {
+            throw new UnauthorizedActionException("You can update only your applications.");
+        }
+    }
+
+    private void validatePendingStatus(LoanApplication loanApplication) {
+        if (loanApplication.getStatus() != (ApplicationStatus.PENDING)) {
+            throw new InvalidLoanApplicationException("Only pending applications can be modified.");
+        }
+    }
+
+    private void validateAmountAndPeriod(LoanApplicationDTO loanApplicationDTO, LoanProduct loanProduct) {
+        BigDecimal requestedAmount = loanApplicationDTO.getRequestedAmount();
+        if (requestedAmount.compareTo(loanProduct.getMinAmount()) < 0
+                || requestedAmount.compareTo(loanProduct.getMaxAmount()) > 0) {
+            throw new InvalidLoanApplicationException("Requested amount is out of range.");
+        }
+
+        Integer periodMonths = loanApplicationDTO.getPeriodMonths();
+        if (periodMonths < loanProduct.getMinPeriodMonths() || periodMonths > loanProduct.getMaxPeriodMonths()) {
+            throw new InvalidLoanApplicationException("Selected period is out of range.");
+        }
+    }
+
+    private void applyCalculatedValues(LoanApplication loanApplication, LoanProduct loanProduct) {
+        BigDecimal interestRate = loanProduct.getBaseInterestRate()
+                .add(loanProduct.getMonthlyInterestIncrease()
+                        .multiply(BigDecimal.valueOf(loanApplication.getPeriodMonths())));
+
+        BigDecimal interestAmount = loanApplication.getRequestedAmount()
+                .multiply(interestRate)
+                .divide(BigDecimal.valueOf(100), 2, RoundingMode.HALF_UP);
+
+        BigDecimal totalRepaymentAmount = loanApplication.getRequestedAmount().add(interestAmount);
+
+        BigDecimal monthlyPayment = totalRepaymentAmount
+                .divide(BigDecimal.valueOf(loanApplication.getPeriodMonths()), 2, RoundingMode.HALF_UP);
+
+        loanApplication.setInterestRate(interestRate);
+        loanApplication.setTotalRepaymentAmount(totalRepaymentAmount);
+        loanApplication.setMonthlyPayment(monthlyPayment);
+    }
+
+}
