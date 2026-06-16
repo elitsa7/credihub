@@ -16,8 +16,18 @@
 
         <div class="navbar-nav ms-auto">
             <a class="nav-link active" href="/">Home</a>
-            <a class="nav-link" href="/auth/login">Login</a>
-            <a class="nav-link" href="/auth/register">Register</a>
+
+            <th:block th:if="${currentUser == null}">
+                <a class="nav-link" th:href="@{/auth/login}">Login</a>
+                <a class="nav-link" th:href="@{/auth/register}">Register</a>
+            </th:block>
+
+            <th:block th:if="${currentUser != null}">
+                <a class="nav-link" th:href="@{/applications}">My applications</a>
+                <a class="nav-link" th:if="${currentUser.role.name() == 'ADMIN'}" th:href="@{/admin}">Admin</a>
+                <a class="nav-link" th:href="@{/auth/logout}">Logout</a>
+            </th:block>
+
         </div>
     </div>
 </nav>

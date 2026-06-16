@@ -31,14 +31,24 @@ public class SessionInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String endpoint = request.getServletPath();
 
+        HttpSession session = request.getSession(false);
+
+        if (session != null) {
+            UUID userId = (UUID) session.getAttribute(USER_ID);
+
+            if (userId != null) {
+                userRepository.findById(userId)
+                        .ifPresent(user ->
+                                request.setAttribute("currentUser", user));
+            }
+        }
+
         if (PUBLIC_ENDPOINTS.contains(endpoint)
                 || endpoint.startsWith("/css/")
                 || endpoint.startsWith("/js/")
                 || endpoint.startsWith("/images/")) {
             return true;
         }
-
-        HttpSession session = request.getSession(false);
 
         if (session == null) {
             response.sendRedirect("/auth/login");
