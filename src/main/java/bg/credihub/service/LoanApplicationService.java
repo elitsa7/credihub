@@ -38,7 +38,7 @@ public class LoanApplicationService {
         User user = userService.getById(userId);
         LoanProduct loanProduct = loanProductService.getById(loanApplicationDTO.getLoanProductId());
 
-        if(loanApplicationRepository.existsByUserAndLoanProductAndStatus(user,loanProduct, ApplicationStatus.PENDING)){
+        if (loanApplicationRepository.existsByUserAndLoanProductAndStatus(user, loanProduct, ApplicationStatus.PENDING)) {
             throw new InvalidLoanApplicationException("You already have an application for this loan product");
         }
 
@@ -91,6 +91,21 @@ public class LoanApplicationService {
                 .orElseThrow(() -> new LoanApplicationNotFoundException("LoanApplication with id " + id + " not found."));
     }
 
+    public LoanApplication calculate(LoanApplicationDTO loanApplicationDTO) {
+        LoanProduct loanProduct = loanProductService.getById(loanApplicationDTO.getLoanProductId());
+
+        validateLoanProductIsActive(loanProduct);
+        validateAmountAndPeriod(loanApplicationDTO, loanProduct);
+
+        LoanApplication loanApplication = new LoanApplication();
+        loanApplication.setRequestedAmount(loanApplicationDTO.getRequestedAmount());
+        loanApplication.setPeriodMonths(loanApplicationDTO.getPeriodMonths());
+
+        applyCalculatedValues(loanApplication, loanProduct);
+
+        return loanApplication;
+    }
+
 
     private void validateLoanProductIsActive(LoanProduct loanProduct) {
         if (!loanProduct.isActive()) {
@@ -99,7 +114,7 @@ public class LoanApplicationService {
     }
 
     private void validateMonthlyIncome(LoanApplicationDTO loanApplicationDTO) {
-        if(loanApplicationDTO.getMonthlyIncome().compareTo(BigDecimal.valueOf(1000)) < 0) {
+        if (loanApplicationDTO.getMonthlyIncome().compareTo(BigDecimal.valueOf(620)) < 0) {
             throw new InvalidLoanApplicationException(
                     "Minimum monthly income is 620 EUR.");
         }
