@@ -1,8 +1,8 @@
 package bg.credihub.service;
 
 import bg.credihub.exception.*;
-import bg.credihub.model.dtos.UserLoginDTO;
-import bg.credihub.model.dtos.UserRegisterDTO;
+import bg.credihub.model.dtos.user.UserLoginDTO;
+import bg.credihub.model.dtos.user.UserRegisterDTO;
 import bg.credihub.model.entities.User;
 import bg.credihub.model.enums.Role;
 import bg.credihub.repository.UserRepository;

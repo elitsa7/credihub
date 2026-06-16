@@ -5,6 +5,7 @@ import bg.credihub.exception.InvalidLoanProductException;
 import bg.credihub.exception.LoanApplicationNotFoundException;
 import bg.credihub.exception.UnauthorizedActionException;
 import bg.credihub.model.dtos.LoanApplicationDTO;
+import bg.credihub.model.dtos.LoanCalculatorDTO;
 import bg.credihub.model.entities.LoanApplication;
 import bg.credihub.model.entities.LoanProduct;
 import bg.credihub.model.entities.User;
@@ -43,7 +44,7 @@ public class LoanApplicationService {
         }
 
         validateLoanProductIsActive(loanProduct);
-        validateAmountAndPeriod(loanApplicationDTO, loanProduct);
+        validateAmountAndPeriod(loanApplicationDTO.getRequestedAmount(), loanApplicationDTO.getPeriodMonths(), loanProduct);
         validateMonthlyIncome(loanApplicationDTO);
 
         LoanApplication loanApplication = modelMapper.map(loanApplicationDTO, LoanApplication.class);
@@ -66,7 +67,7 @@ public class LoanApplicationService {
 
         LoanProduct loanProduct = loanProductService.getById(loanApplicationDTO.getLoanProductId());
         validateLoanProductIsActive(loanProduct);
-        validateAmountAndPeriod(loanApplicationDTO, loanProduct);
+        validateAmountAndPeriod(loanApplicationDTO.getRequestedAmount(), loanApplicationDTO.getPeriodMonths(), loanProduct);
 
         modelMapper.map(loanApplicationDTO, loanApplication);
 
@@ -91,15 +92,15 @@ public class LoanApplicationService {
                 .orElseThrow(() -> new LoanApplicationNotFoundException("LoanApplication with id " + id + " not found."));
     }
 
-    public LoanApplication calculate(LoanApplicationDTO loanApplicationDTO) {
-        LoanProduct loanProduct = loanProductService.getById(loanApplicationDTO.getLoanProductId());
+    public LoanApplication calculate(LoanCalculatorDTO loanCalculatorDTO) {
+        LoanProduct loanProduct = loanProductService.getById(loanCalculatorDTO.getLoanProductId());
 
         validateLoanProductIsActive(loanProduct);
-        validateAmountAndPeriod(loanApplicationDTO, loanProduct);
+        validateAmountAndPeriod(loanCalculatorDTO.getRequestedAmount(), loanCalculatorDTO.getPeriodMonths(), loanProduct);
 
         LoanApplication loanApplication = new LoanApplication();
-        loanApplication.setRequestedAmount(loanApplicationDTO.getRequestedAmount());
-        loanApplication.setPeriodMonths(loanApplicationDTO.getPeriodMonths());
+        loanApplication.setRequestedAmount(loanCalculatorDTO.getRequestedAmount());
+        loanApplication.setPeriodMonths(loanCalculatorDTO.getPeriodMonths());
 
         applyCalculatedValues(loanApplication, loanProduct);
 
@@ -132,16 +133,17 @@ public class LoanApplicationService {
         }
     }
 
-    private void validateAmountAndPeriod(LoanApplicationDTO loanApplicationDTO, LoanProduct loanProduct) {
-        BigDecimal requestedAmount = loanApplicationDTO.getRequestedAmount();
+    private void validateAmountAndPeriod(BigDecimal requestedAmount, Integer periodMonths, LoanProduct loanProduct) {
         if (requestedAmount.compareTo(loanProduct.getMinAmount()) < 0
                 || requestedAmount.compareTo(loanProduct.getMaxAmount()) > 0) {
-            throw new InvalidLoanApplicationException("Requested amount is out of range.");
+            throw new InvalidLoanApplicationException(
+                    "Requested amount is out of range.");
         }
 
-        Integer periodMonths = loanApplicationDTO.getPeriodMonths();
-        if (periodMonths < loanProduct.getMinPeriodMonths() || periodMonths > loanProduct.getMaxPeriodMonths()) {
-            throw new InvalidLoanApplicationException("Selected period is out of range.");
+        if (periodMonths < loanProduct.getMinPeriodMonths()
+                || periodMonths > loanProduct.getMaxPeriodMonths()) {
+            throw new InvalidLoanApplicationException(
+                    "Selected period is out of range.");
         }
     }
 

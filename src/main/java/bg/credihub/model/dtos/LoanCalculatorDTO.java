@@ -1,8 +1,5 @@
 package bg.credihub.model.dtos;
 
-import bg.credihub.model.entities.LoanDecision;
-import bg.credihub.model.enums.LoanPurpose;
-import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -19,19 +16,14 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoanApplicationDTO {
+public class LoanCalculatorDTO {
     @NotNull(message = "Loan product is required.")
     private UUID loanProductId;
     @NotNull(message = "Requested amount is required.")
-    @DecimalMin(value = "100.00", message = "Requested amount must be at least 100.")
+    @DecimalMin(value = "100.00")
     private BigDecimal requestedAmount;
     @NotNull(message = "Period is required.")
-    @Min(value = 1, message = "Period must be at least 1 month.")
-    @Max(value = 120, message = "Period cannot exceed 120 months.")
+    @Min(1)
+    @Max(120)
     private Integer periodMonths;
-    @NotNull(message = "Monthly income is required.")
-    @DecimalMin(value = "1.00", message = "Monthly income must be positive.")
-    private BigDecimal monthlyIncome;
-    @NotNull(message = "Purpose is required.")
-    private LoanPurpose purpose;
 }

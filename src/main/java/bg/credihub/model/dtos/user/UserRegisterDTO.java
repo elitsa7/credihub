@@ -1,4 +1,4 @@
-package bg.credihub.model.dtos;
+package bg.credihub.model.dtos.user;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -29,7 +29,7 @@ public class UserRegisterDTO {
     @Email(message = "Enter a valid email address.")
     private String email;
     @NotBlank(message = "Password is required.")
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\\\d)(?=.*[@#$%^&+=]).{8,}$",
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=]).{8,}$",
             message = "Password must contain at least 8 characters. one uppercase letter, one lowercase, one digit and one special symbol.")
     private String password;
     @NotBlank(message = "Confirm password is required.")

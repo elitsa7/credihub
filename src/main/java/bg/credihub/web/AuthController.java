@@ -1,7 +1,7 @@
 package bg.credihub.web;
 
-import bg.credihub.model.dtos.UserLoginDTO;
-import bg.credihub.model.dtos.UserRegisterDTO;
+import bg.credihub.model.dtos.user.UserLoginDTO;
+import bg.credihub.model.dtos.user.UserRegisterDTO;
 import bg.credihub.model.entities.User;
 import bg.credihub.service.UserService;
 import jakarta.servlet.http.HttpSession;

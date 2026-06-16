@@ -38,35 +38,63 @@
             <div class="card shadow-lg border-0">
                 <div class="card-body p-4">
                     <h3 class="text-center mb-4">Loan Calculator</h3>
-                    <div class="mb-3">
-                        <label class="form-label">Amount (EUR)</label>
 
-                        <input type="number" class="form-control" placeholder="10000"></div>
+                    <form th:object="${loanCalculatorDTO}" th:action="@{/calculate}" method="post">
+                        <div class="mb-3">
+                            <label class="form-label">Loan product</label>
+                            <select class="form-select" th:field="*{loanProductId}">
+                                <option value="">Select product</option>
+                                <option th:each="product : ${loanProducts}" th:value="${product.id}"
+                                        th:text="${product.name}"></option>
+                            </select>
+                            <small class="text-danger" th:if="${#fields.hasErrors('loanProductId')}"
+                                   th:errors="*{loanProductId}">
+                            </small>
+                        </div>
 
-                    <div class="mb-4">
-                        <label class="form-label">Period (Months)</label>
-                        <input type="number" class="form-control" placeholder="24"></div>
+                        <div class="mb-3">
+                            <label class="form-label">Amount (EUR)</label>
+                            <input type="number" class="form-control" th:field="*{requestedAmount}">
+                            <small class="text-danger" th:if="${#fields.hasErrors('requestedAmount')}"
+                                   th:errors="*{requestedAmount}">
+                            </small>
+                        </div>
 
-                    <hr>
+                        <div class="mb-3">
+                            <label class="form-label">Period (Months)</label>
+                            <input type="number" class="form-control" th:field="*{periodMonths}">
+                            <small class="text-danger" th:if="${#fields.hasErrors('periodMonths')}"
+                                   th:errors="*{periodMonths}">
+                            </small>
+                        </div>
 
-                    <div class="d-flex justify-content-between">
-                        <strong>Interest Rate:</strong>
-                        <span>7.5%</span>
+                        <div class="d-grid mt-4">
+                            <button type=submit class="btn btn-success">Calculate</button>
+                        </div>
+
+                    </form>
+
+                    <div th:if="${result != null}">
+                        <hr>
+
+                        <div class="d-flex justify-content-between">
+                            <strong>Interest Rate:</strong>
+                            <span th:text="${result.interestRate}"></span>
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-2">
+                            <strong>Monthly Payment:</strong>
+                            <span th:text="${result.monthlyPayment}"></span>
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-2">
+                            <strong>Total Repayment:</strong>
+                            <span th:text="${result.totalRepaymentAmount}"></span>
+                        </div>
                     </div>
 
-                    <div class="d-flex justify-content-between mt-2">
-                        <strong>Monthly Payment:</strong>
-                        <span>456.22 EUR</span>
-                    </div>
-
-                    <div class="d-flex justify-content-between mt-2">
-                        <strong>Total Repayment:</strong>
-                        <span>10949.28 EUR</span>
-                    </div>
-
-                    <div class="d-grid mt-4">
-                        <button class="btn btn-success">Calculate</button>
-                    </div>
+                    <p class="text-danger text-center mt-3" th:if="${calculateError}" th:text="${calculateError}">
+                    </p>
                 </div>
             </div>
         </div>

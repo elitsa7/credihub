@@ -12,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class AdminInitConfig {
 
     @Bean
-    public CommandLineRunner commandLineRunner(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public CommandLineRunner adminInit(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         return args -> {
             if(userRepository.findByEmail("admin@credihub.com").isEmpty()) {
                 User admin = new User();
