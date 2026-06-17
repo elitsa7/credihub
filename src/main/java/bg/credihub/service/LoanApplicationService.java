@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -45,10 +46,14 @@ public class LoanApplicationService {
 
         validateLoanProductIsActive(loanProduct);
         validateAmountAndPeriod(loanApplicationDTO.getRequestedAmount(), loanApplicationDTO.getPeriodMonths(), loanProduct);
-        validateMonthlyIncome(loanApplicationDTO);
+        validateMonthlyIncome(loanApplicationDTO, loanProduct);
 
-        LoanApplication loanApplication = modelMapper.map(loanApplicationDTO, LoanApplication.class);
+        LoanApplication loanApplication = new LoanApplication();
 
+        loanApplication.setRequestedAmount(loanApplicationDTO.getRequestedAmount());
+        loanApplication.setPeriodMonths(loanApplicationDTO.getPeriodMonths());
+        loanApplication.setMonthlyIncome(loanApplicationDTO.getMonthlyIncome());
+        loanApplication.setLoanPurpose(loanApplicationDTO.getPurpose());
         loanApplication.setLoanProduct(loanProduct);
         loanApplication.setUser(user);
         loanApplication.setStatus(ApplicationStatus.PENDING);
@@ -87,11 +92,6 @@ public class LoanApplicationService {
         loanApplicationRepository.save(loanApplication);
     }
 
-    public LoanApplication getById(UUID id) {
-        return loanApplicationRepository.findById(id)
-                .orElseThrow(() -> new LoanApplicationNotFoundException("LoanApplication with id " + id + " not found."));
-    }
-
     public LoanApplication calculate(LoanCalculatorDTO loanCalculatorDTO) {
         LoanProduct loanProduct = loanProductService.getById(loanCalculatorDTO.getLoanProductId());
 
@@ -107,6 +107,16 @@ public class LoanApplicationService {
         return loanApplication;
     }
 
+    public LoanApplication getById(UUID id) {
+        return loanApplicationRepository.findById(id)
+                .orElseThrow(() -> new LoanApplicationNotFoundException("LoanApplication with id " + id + " not found."));
+    }
+
+    public List<LoanApplication> getAllByUser(UUID userId) {
+        User user = userService.getById(userId);
+        return loanApplicationRepository.findAllByUser(user);
+    }
+
 
     private void validateLoanProductIsActive(LoanProduct loanProduct) {
         if (!loanProduct.isActive()) {
@@ -114,10 +124,10 @@ public class LoanApplicationService {
         }
     }
 
-    private void validateMonthlyIncome(LoanApplicationDTO loanApplicationDTO) {
-        if (loanApplicationDTO.getMonthlyIncome().compareTo(BigDecimal.valueOf(620)) < 0) {
+    private void validateMonthlyIncome(LoanApplicationDTO loanApplicationDTO, LoanProduct loanProduct) {
+        if (loanApplicationDTO.getMonthlyIncome().compareTo(loanProduct.getMinimumIncome()) < 0) {
             throw new InvalidLoanApplicationException(
-                    "Minimum monthly income is 620 EUR.");
+                    "Minimum monthly income for " + loanProduct.getName() + " is " + loanProduct.getMinimumIncome() + " EUR.");
         }
     }
 

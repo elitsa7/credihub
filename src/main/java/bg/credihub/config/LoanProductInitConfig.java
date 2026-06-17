@@ -28,6 +28,7 @@ public class LoanProductInitConfig {
             personalLoan.setMaxPeriodMonths(60);
             personalLoan.setBaseInterestRate(BigDecimal.valueOf(5));
             personalLoan.setMonthlyInterestIncrease(BigDecimal.valueOf(0.1));
+            personalLoan.setMinimumIncome(BigDecimal.valueOf(620));
             personalLoan.setActive(true);
 
             LoanProduct businessLoan = new LoanProduct();
@@ -39,6 +40,7 @@ public class LoanProductInitConfig {
             businessLoan.setMaxPeriodMonths(120);
             businessLoan.setBaseInterestRate(BigDecimal.valueOf(4));
             businessLoan.setMonthlyInterestIncrease(BigDecimal.valueOf(0.08));
+            businessLoan.setMinimumIncome(BigDecimal.valueOf(1500));
             businessLoan.setActive(true);
 
             loanProductRepository.save(personalLoan);

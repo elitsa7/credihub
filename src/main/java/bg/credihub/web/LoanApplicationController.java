@@ -27,7 +27,7 @@ public class LoanApplicationController {
     }
 
     @GetMapping("/create")
-    public ModelAndView getCreateApplicationPage(){
+    public ModelAndView getCreateApplicationPage() {
         ModelAndView mav = new ModelAndView("application-create");
         mav.addObject("loanApplicationDTO", new LoanApplicationDTO());
         mav.addObject("loanProducts", loanProductService.getAll());
@@ -37,16 +37,29 @@ public class LoanApplicationController {
     @PostMapping("/create")
     public ModelAndView createApplication(@Valid @ModelAttribute LoanApplicationDTO loanApplicationDTO,
                                           BindingResult bindingResult,
-                                          HttpSession session){
-        if(bindingResult.hasErrors()) {
-            ModelAndView mav = new ModelAndView("application-create");
+                                          HttpSession session) {
+        ModelAndView mav = new ModelAndView("application-create");
+
+        if (bindingResult.hasErrors()) {
             mav.addObject("loanProducts", loanProductService.getAll());
             return mav;
         }
+        try {
+            UUID userId = (UUID) session.getAttribute("user_id");
+            loanApplicationService.createLoanApplication(userId, loanApplicationDTO);
+            return new ModelAndView("redirect:/applications");
+        } catch (RuntimeException e) {
+            mav.addObject("applicationError", e.getMessage());
+            mav.addObject("loanProducts", loanProductService.getAll());
+            return mav;
+        }
+    }
 
-        UUID userId = (UUID)session.getAttribute("user_id");
-        loanApplicationService.createLoanApplication(userId, loanApplicationDTO);
-
-        return new ModelAndView("redirect:/applications");
+    @GetMapping
+    public ModelAndView getMyApplicationPage(HttpSession session) {
+        UUID userId = (UUID) session.getAttribute("user_id");
+        ModelAndView mav = new ModelAndView("applications");
+        mav.addObject("applications", loanApplicationService.getAllByUser(userId));
+        return mav;
     }
 }

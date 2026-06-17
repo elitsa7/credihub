@@ -33,7 +33,7 @@ public class LoanApplication {
     @Column(nullable = false)
     private Integer periodMonths;
     @Column(nullable = false)
-    private Integer monthlyIncome;
+    private BigDecimal monthlyIncome;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private LoanPurpose loanPurpose;

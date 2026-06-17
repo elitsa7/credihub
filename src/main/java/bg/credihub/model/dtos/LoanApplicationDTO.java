@@ -1,8 +1,6 @@
 package bg.credihub.model.dtos;
 
-import bg.credihub.model.entities.LoanDecision;
 import bg.credihub.model.enums.LoanPurpose;
-import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

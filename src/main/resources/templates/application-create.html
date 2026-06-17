@@ -67,6 +67,12 @@
                                 </small>
                             </select>
 
+                            <p class="text-danger text-center mt-3"
+                               th:if="${applicationError}"
+                               th:text="${applicationError}">
+
+                            </p>
+
                             <div class="text-center mt-3">
                                 <button type="submit" class="btn btn-primary">Submit Application</button>
                             </div>

@@ -36,5 +36,7 @@ public class LoanProduct {
     @Column(nullable = false)
     private BigDecimal monthlyInterestIncrease;
     @Column(nullable = false)
+    private BigDecimal minimumIncome;
+    @Column(nullable = false)
     private boolean active;
 }
