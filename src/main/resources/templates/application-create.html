@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Create Application</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+</head>
+<body bg-light>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6">
+            <div class="card shadow-lg border-0">
+                <div class="card-body p-4">
+                    <h2 class="text-center mb-4">Loan Application</h2>
+
+                    <form th:action="@{/applications/create}" th:object="${loanApplicationDTO}" method="post">
+                        <div class="mb-3">
+                            <label class="form-label">Loan Product</label>
+                            <select class="form-select" th:field="*{loanProductId}">
+                                <option value="">Select product</option>
+                                <option th:each="product : ${loanProducts}" th:value="${product.id}"
+                                        th:text="${product.name}"></option>
+                            </select>
+                            <small class="text-danger" th:if="${#fields.hasErrors('loanProductId')}"
+                                   th:errors="*{loanProductId}">
+                            </small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Amount (EUR)</label>
+                            <input type="number" class="form-control" th:field="*{requestedAmount}">
+                            <small class="text-danger" th:if="${#fields.hasErrors('requestedAmount')}"
+                                   th:errors="*{requestedAmount}">
+                            </small>
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label class="form-label">Period (months)</label>
+                            <input type="number" class="form-control" th:field="*{periodMonths}">
+                            <small class="text-danger" th:if="${#fields.hasErrors('periodMonths')}"
+                                   th:errors="*{periodMonths}">
+                            </small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Monthly income</label>
+                            <input type="number" class="form-control" th:field="*{monthlyIncome}">
+                            <small class="text-danger" th:if="${#fields.hasErrors('monthlyIncome')}"
+                                   th:errors="*{monthlyIncome}">
+                            </small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Purpose</label>
+                            <select class="form-select" th:field="*{purpose}">
+                                <option value="">Select purpose</option>
+                                <option th:each="purpose : ${T(bg.credihub.model.enums.LoanPurpose).values()}"
+                                        th:value="${purpose}"
+                                        th:text="${purpose}"></option>
+                                <small class="text-danger" th:if="${#fields.hasErrors('purpose')}"
+                                       th:errors="*{purpose}">
+                                </small>
+                            </select>
+
+                            <div class="text-center mt-3">
+                                <button type="submit" class="btn btn-primary">Submit Application</button>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
