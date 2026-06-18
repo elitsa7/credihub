@@ -92,6 +92,12 @@ public class LoanApplicationService {
         loanApplicationRepository.save(loanApplication);
     }
 
+    public LoanApplication getApplicationDetails(UUID applicationId, UUID userId) {
+        LoanApplication loanApplication = getById(applicationId);
+        validateOwner(loanApplication, userId);
+        return loanApplication;
+    }
+
     public LoanApplication calculate(LoanCalculatorDTO loanCalculatorDTO) {
         LoanProduct loanProduct = loanProductService.getById(loanCalculatorDTO.getLoanProductId());
 

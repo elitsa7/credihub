@@ -9,29 +9,48 @@
           rel="stylesheet">
 </head>
 <body bg-light>
-<table class="table table-striped">
-    <thead>
-    <tr>
-        <th scope="col">Product</th>
-        <th scope="col">Amount</th>
-        <th scope="col">Period</th>
-        <th scope="col">Status</th>
-        <th scope="col">Created</th>
-        <th scope="col">Details</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="loanApplication : ${applications}">
-        <td th:text="${loanApplication.loanProduct.name}"></td>
-        <td th:text="${loanApplication.requestedAmount}"></td>
-        <td th:text="${loanApplication.periodMonths}"></td>
-        <td th:text="${loanApplication.status}"></td>
-        <td th:text="${#temporals.format(loanApplication.createdAt, 'dd MMM yyyy HH:mm')}"></td>
-        <td>
-            <a th:href="@{/applications/{id}(id=${loanApplication.id})}" class="btn btn-primary">View</a>
-        </td>
-    </tr>
-    </tbody>
-</table>
+<div class="container mt-5">
+    <h2 class="text-center mb-4">My Applications</h2>
+    <table class="table table-striped table-hover shadow">
+        <thead>
+        <tr>
+            <th scope="col">Product</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Period</th>
+            <th scope="col">Status</th>
+            <th scope="col">Created</th>
+            <th scope="col">Details</th>
+        </tr>
+        </thead>
+
+        <tbody th:if="${applications.isEmpty()}">
+        <tr>
+            <td colspan="6" class="text-center">No applications found.</td>
+        </tr>
+        </tbody>
+
+        <tbody th:if="${!applications.isEmpty()}">
+        <tr th:each="loanApplication : ${applications}">
+            <td th:text="${loanApplication.loanProduct.name}"></td>
+            <td th:text="${loanApplication.requestedAmount}"></td>
+            <td th:text="${loanApplication.periodMonths}"></td>
+            <td>
+                <span class="badge bg-warning"
+                      th:if="${loanApplication.status.name() == 'PENDING'}">Pending</span>
+                <span class="badge bg-success"
+                      th:if="${loanApplication.status.name() == 'APPROVED'}">Approved</span>
+                <span class="badge bg-danger"
+                      th:if="${loanApplication.status.name() == 'REJECTED'}">Rejected</span>
+                <span class="badge bg-secondary"
+                      th:if="${loanApplication.status.name() == 'CANCELLED'}">Cancelled</span>
+            </td>
+            <td th:text="${#temporals.format(loanApplication.createdAt, 'dd MMM yyyy HH:mm')}"></td>
+            <td class="text-center">
+                <a th:href="@{/applications/{id}(id=${loanApplication.id})}" class="btn btn-primary">View</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>

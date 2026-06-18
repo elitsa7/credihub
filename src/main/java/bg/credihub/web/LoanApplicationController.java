@@ -7,10 +7,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.UUID;
@@ -61,5 +58,23 @@ public class LoanApplicationController {
         ModelAndView mav = new ModelAndView("applications");
         mav.addObject("applications", loanApplicationService.getAllByUser(userId));
         return mav;
+    }
+
+    @GetMapping("/{id}")
+    public ModelAndView getApplicationDetails(@PathVariable UUID id, HttpSession session) {
+        UUID userId = (UUID) session.getAttribute("user_id");
+
+        ModelAndView mav = new ModelAndView("application-details");
+
+        mav.addObject("loanApplication", loanApplicationService.getApplicationDetails(id, userId));
+
+        return mav;
+    }
+
+    @PostMapping("{id}/cancel")
+    public ModelAndView cancelApplication(@PathVariable UUID id, HttpSession session) {
+        UUID userId = (UUID) session.getAttribute("user_id");
+        loanApplicationService.cancelLoanApplication(id, userId);
+        return new ModelAndView("redirect:/applications");
     }
 }

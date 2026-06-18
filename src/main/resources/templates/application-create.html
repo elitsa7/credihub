@@ -61,11 +61,12 @@
                                 <option value="">Select purpose</option>
                                 <option th:each="purpose : ${T(bg.credihub.model.enums.LoanPurpose).values()}"
                                         th:value="${purpose}"
-                                        th:text="${purpose}"></option>
-                                <small class="text-danger" th:if="${#fields.hasErrors('purpose')}"
-                                       th:errors="*{purpose}">
-                                </small>
+                                        th:text="${#strings.replace(purpose.name(), '_', ' ')}"></option>
                             </select>
+
+                            <small class="text-danger" th:if="${#fields.hasErrors('purpose')}"
+                                   th:errors="*{purpose}">
+                            </small>
 
                             <p class="text-danger text-center mt-3"
                                th:if="${applicationError}"
