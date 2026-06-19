@@ -1,41 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>CrediHub</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-          rel="stylesheet">
-</head>
-<body class="bg-light">
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div class="container">
+<head th:replace="~{fragments/head :: head('Home')}"></head>
 
-        <a class="navbar-brand fw-bold" href="/">CrediHub</a>
-
-        <div class="navbar-nav ms-auto">
-            <a class="nav-link active" href="/">Home</a>
-
-            <th:block th:if="${currentUser == null}">
-                <a class="nav-link" th:href="@{/auth/login}">Login</a>
-                <a class="nav-link" th:href="@{/auth/register}">Register</a>
-            </th:block>
-
-            <th:block th:if="${currentUser != null}">
-                <a class="nav-link" th:href="@{/applications}">My applications</a>
-                <a class="nav-link" th:if="${currentUser.role.name() == 'ADMIN'
-                || currentUser.role.name() == 'MODERATOR'}"
-                   th:href="@{/admin/dashboard}">Dashboard</a>
-                <a class="nav-link" th:if="${currentUser.role.name() == 'ADMIN'}"
-                   th:href="@{/admin/users}">Roles</a>
-                <a class="nav-link" th:href="@{/auth/logout}">Logout</a>
-            </th:block>
-
-        </div>
-    </div>
-</nav>
-
+<body class="bg-light d-flex flex-column min-vh-100">
+<div th:replace="~{fragments/navbar :: navbar}"></div>
 <div class="container py-5">
     <div class="row align-items-center">
         <div class="col-lg-6">
@@ -150,10 +119,6 @@
     </div>
 
 </section>
-
-<footer class="bg-white text-center py-3 border-top">
-    <p class="mb-0">© 2026 CrediHub. All rights reserved.</p>
-</footer>
-
+<div th:replace="~{fragments/footer :: footer}"></div>
 </body>
 </html>
