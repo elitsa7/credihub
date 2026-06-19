@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -61,8 +62,37 @@ public class UserService {
         return user;
     }
 
+    public void makeModerator(UUID userId) {
+        User user = getById(userId);
+
+        if (user.getRole().equals(Role.ADMIN)) {
+            throw new RoleModificationException("Admin role cannot be changed.");
+        }
+
+        user.setRole(Role.MODERATOR);
+        userRepository.save(user);
+    }
+
+    public void removeModerator(UUID userId) {
+        User user = getById(userId);
+
+        if (user.getRole().equals(Role.ADMIN)) {
+            throw new RoleModificationException("Admin role cannot be changed.");
+        }
+
+        user.setRole(Role.USER);
+        userRepository.save(user);
+    }
+
     public User getById(UUID id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User not found."));
+    }
+
+    public List<User> getAllWithoutAdmin() {
+        return userRepository.findAll()
+                .stream()
+                .filter(user -> user.getRole() != Role.ADMIN)
+                .toList();
     }
 }
