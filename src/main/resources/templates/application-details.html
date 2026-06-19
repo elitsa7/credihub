@@ -30,8 +30,8 @@
                         <tr>
                             <th>Status</th>
                             <td>
-                    <span class="badge bg-warning"
-                          th:if="${loanApplication.status.name() == 'PENDING'}">Pending</span>
+                                <span class="badge bg-warning"
+                                      th:if="${loanApplication.status.name() == 'PENDING'}">Pending</span>
 
                                 <span class="badge bg-success"
                                       th:if="${loanApplication.status.name() == 'APPROVED'}">Approved</span>

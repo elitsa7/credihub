@@ -24,7 +24,7 @@
 
             <th:block th:if="${currentUser != null}">
                 <a class="nav-link" th:href="@{/applications}">My applications</a>
-                <a class="nav-link" th:if="${currentUser.role.name() == 'ADMIN'}" th:href="@{/admin}">Admin</a>
+                <a class="nav-link" th:if="${currentUser.role.name() == 'ADMIN'}" th:href="@{/admin/dashboard}">Dashboard</a>
                 <a class="nav-link" th:href="@{/auth/logout}">Logout</a>
             </th:block>
 

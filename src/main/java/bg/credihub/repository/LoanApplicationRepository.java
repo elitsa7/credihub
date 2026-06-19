@@ -16,4 +16,6 @@ public interface LoanApplicationRepository extends JpaRepository<LoanApplication
     boolean existsByUserAndLoanProductAndStatus(User user, LoanProduct loanProduct, ApplicationStatus applicationStatus);
 
     List<LoanApplication> findAllByUser(User user);
+
+    List<LoanApplication> findAllByOrderByCreatedAtDesc();
 }

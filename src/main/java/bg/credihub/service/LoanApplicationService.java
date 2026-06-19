@@ -123,6 +123,25 @@ public class LoanApplicationService {
         return loanApplicationRepository.findAllByUser(user);
     }
 
+    public List<LoanApplication> getAll() {
+        return loanApplicationRepository.findAllByOrderByCreatedAtDesc();
+    }
+
+    public void approve(UUID id) {
+        LoanApplication loanApplication = getById(id);
+        validatePendingStatus(loanApplication);
+        loanApplication.setStatus(ApplicationStatus.APPROVED);
+        loanApplicationRepository.save(loanApplication);
+    }
+
+    public void reject(UUID id) {
+        LoanApplication loanApplication = getById(id);
+        validatePendingStatus(loanApplication);
+        loanApplication.setStatus(ApplicationStatus.REJECTED);
+        loanApplicationRepository.save(loanApplication);
+
+    }
+
 
     private void validateLoanProductIsActive(LoanProduct loanProduct) {
         if (!loanProduct.isActive()) {
@@ -181,5 +200,4 @@ public class LoanApplicationService {
         loanApplication.setTotalRepaymentAmount(totalRepaymentAmount);
         loanApplication.setMonthlyPayment(monthlyPayment);
     }
-
 }
