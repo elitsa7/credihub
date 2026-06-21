@@ -7,15 +7,11 @@
 
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 
-<div class="container p-5">
+<div class="container-lg mt-5">
     <h2 class="text-center mb-4">Admin Dashboard</h2>
     <div class="card-shadow border-0">
-        <div class="card-header bg-primary text-white">
-            <h4 class="mb-0">Loan Applications</h4>
-        </div>
-
         <div class="card-body p-5">
-            <table class="table table-striped table-hover align-middle">
+            <table class="table table-hover align-middle text-center">
                 <thead>
                 <tr>
                     <th>User</th>
@@ -39,7 +35,7 @@
                     <td th:text="${loanApplication.loanProduct.name}"></td>
                     <td th:text="${loanApplication.requestedAmount + ' EUR'}"></td>
                     <td th:text="${loanApplication.periodMonths + ' months'}"></td>
-                    <td th:text="${loanApplication.monthlyIncome}"></td>
+                    <td th:text="${loanApplication.monthlyIncome + ' EUR'}"></td>
                     <td>
                         <span class="badge bg-warning"
                               th:if="${loanApplication.status.name() == 'PENDING'}">Pending</span>
@@ -55,19 +51,17 @@
                     </td>
                     <td th:text="${#temporals.format(loanApplication.createdAt, 'dd.MM.yyyy HH:mm')}"></td>
                     <td>
-                        <form th:if="${loanApplication.status.name() == 'PENDING'}"
-                              th:action="@{/admin/applications/{id}/approve(id=${loanApplication.id})}"
-                              method="post"
-                              style="display:inline">
-                            <button class="btn btn-success btn-sm">Approve</button>
-                        </form>
+                        <div th:if="${loanApplication.status.name() == 'PENDING'}" class="d-flex gap-2">
+                            <form th:action="@{/admin/applications/{id}/approve(id=${loanApplication.id})}"
+                                  method="post">
+                                <button class="btn btn-success btn-sm">Approve</button>
+                            </form>
 
-                        <form th:if="${loanApplication.status.name() == 'PENDING'}"
-                              th:action="@{/admin/applications/{id}/reject(id=${loanApplication.id})}"
-                              method="post"
-                              style="display:inline">
-                            <button class="btn btn-danger btn-sm">Reject</button>
-                        </form>
+                            <form th:action="@{/admin/applications/{id}/reject(id=${loanApplication.id})}"
+                                  method="post">
+                                <button class="btn btn-danger btn-sm">Reject</button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
                 </tbody>

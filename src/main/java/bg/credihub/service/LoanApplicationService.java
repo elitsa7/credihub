@@ -63,25 +63,6 @@ public class LoanApplicationService {
         loanApplicationRepository.save(loanApplication);
     }
 
-    public void updateLoanApplication(UUID applicationId, UUID userId, LoanApplicationDTO loanApplicationDTO) {
-        LoanApplication loanApplication = getById(applicationId);
-
-        validateOwner(loanApplication, userId);
-
-        validatePendingStatus(loanApplication);
-
-        LoanProduct loanProduct = loanProductService.getById(loanApplicationDTO.getLoanProductId());
-        validateLoanProductIsActive(loanProduct);
-        validateAmountAndPeriod(loanApplicationDTO.getRequestedAmount(), loanApplicationDTO.getPeriodMonths(), loanProduct);
-
-        modelMapper.map(loanApplicationDTO, loanApplication);
-
-        loanApplication.setLoanProduct(loanProduct);
-        applyCalculatedValues(loanApplication, loanProduct);
-
-        loanApplicationRepository.save(loanApplication);
-    }
-
     public void cancelLoanApplication(UUID applicationId, UUID userId) {
         LoanApplication loanApplication = getById(applicationId);
 

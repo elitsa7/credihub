@@ -68,7 +68,9 @@
                             </div>
 
                             <div class="text-center mt-3">
-                                <p>Already have an account? <a th:href="@{/auth/login}">Login</a></p>
+                                <p>Already have an account?
+                                    <a th:href="@{/auth/login}" class="text-decoration-none">Login</a>
+                                </p>
                             </div>
 
                             <p class="text-danger text-center" th:if="${registerError}" th:text="${registerError}"></p>

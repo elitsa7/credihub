@@ -7,9 +7,9 @@
 
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 
-<div class="container mt-5">
+<div class="container-lg mt-5">
     <h2 class="text-center mb-4">My Applications</h2>
-    <table class="table table-striped table-hover shadow">
+    <table class="table table-hover align-middle text-center">
         <thead>
         <tr>
             <th scope="col">Product</th>
@@ -23,7 +23,7 @@
 
         <tbody th:if="${applications.isEmpty()}">
         <tr>
-            <td colspan="6" class="text-center">No applications found.</td>
+            <td colspan="6" class="text-center py-5 text-muted">No applications found.</td>
         </tr>
         </tbody>
 
