@@ -1,6 +1,6 @@
 # CrediHub
 
-CrediHub is a web-based loan management platform built with Spring Boot. The application allows users to apply for loans, track their applications, and manage their loan requests. Administrators and moderators can review and process applications through a dedicated administration panel.
+CrediHub is a web-based loan management platform built with Spring Boot. The application allows users to apply for loans, calculate loan costs, edit or cancel pending applications, track their application status, and manage their loan requests. Administrators and moderators can review and process applications through a dedicated administration panel.
 
 ## Features
 
@@ -16,6 +16,7 @@ CrediHub is a web-based loan management platform built with Spring Boot. The app
 * Create loan applications
 * View personal applications
 * View application details
+* Edit pending applications
 * Cancel pending applications
 * Loan calculator
 
@@ -26,12 +27,20 @@ CrediHub is a web-based loan management platform built with Spring Boot. The app
 * Reject applications
 * Dashboard for application management
 
+### Main Functionalities
+1. Create Loan Application
+2. Update Pending Loan Application
+3. Cancel Loan Application
+4. Approve Loan Application
+5. Reject Loan Application
+
 ### User Roles
 
 #### USER
 
 * Create loan applications
 * View own applications
+* Edit own pending applications
 * Cancel own pending applications
 
 #### MODERATOR
@@ -134,7 +143,13 @@ Before running the application, configure the following properties in `applicati
 ```properties
 spring.datasource.username=
 spring.datasource.password=
-app.admin.password=
+app.admin.password=Admin123!
+```
+Default administrator account:
+
+```text
+Email: admin@credihub.com
+Password: Admin123!
 ```
 
 The database is created automatically when the application starts if it does not already exist.
