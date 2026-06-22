@@ -73,6 +73,11 @@ public class SessionInterceptor implements HandlerInterceptor {
             return false;
         }
 
+        if (endpoint.startsWith("/admin/products") && user.getRole() != Role.ADMIN) {
+            response.sendRedirect("/admin/dashboard");
+            return false;
+        }
+
         if (endpoint.startsWith("/admin") && user.getRole() != Role.ADMIN && user.getRole() != Role.MODERATOR) {
             response.sendRedirect("/");
             return false;

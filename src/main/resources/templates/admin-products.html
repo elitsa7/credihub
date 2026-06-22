@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/head :: head('Loan Products')}"></head>
+
+<body class="bg-light d-flex flex-column min-vh-100">
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Loan Products</h2>
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <table class="table table-hover align-middle">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Min Amount</th>
+                    <th>Max Amount</th>
+                    <th>Min Period</th>
+                    <th>Max Period</th>
+                    <th>Active</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="product : ${products}">
+                    <td th:text="${product.name}"></td>
+                    <td th:text="${product.minAmount}"></td>
+                    <td th:text="${product.maxAmount}"></td>
+                    <td th:text="${product.minPeriodMonths}"></td>
+                    <td th:text="${product.maxPeriodMonths}"></td>
+
+                    <td>
+                        <span th:if="${product.active}" class="badge bg-success">Active</span>
+                        <span th:unless="${product.active}" class="badge bg-danger">Inactive</span>
+                    </td>
+                    <td>
+                        <a th:href="@{/admin/products/{id}/edit(id=${product.id})}"
+                           class="btn btn-primary">Edit</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+</body>
+</html>
