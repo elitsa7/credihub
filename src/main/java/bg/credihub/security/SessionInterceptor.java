@@ -19,8 +19,7 @@ public class SessionInterceptor implements HandlerInterceptor {
             "/",
             "/auth/login",
             "/auth/register",
-            "/error"
-    );
+            "/error");
     private final UserRepository userRepository;
 
     public SessionInterceptor(UserRepository userRepository) {
@@ -37,9 +36,7 @@ public class SessionInterceptor implements HandlerInterceptor {
             UUID userId = (UUID) session.getAttribute(USER_ID);
 
             if (userId != null) {
-                userRepository.findById(userId)
-                        .ifPresent(user ->
-                                request.setAttribute("currentUser", user));
+                userRepository.findById(userId).ifPresent(user -> request.setAttribute("currentUser", user));
             }
         }
 

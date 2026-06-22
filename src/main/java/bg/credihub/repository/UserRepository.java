@@ -1,8 +1,6 @@
 package bg.credihub.repository;
 
 import bg.credihub.model.entities.User;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

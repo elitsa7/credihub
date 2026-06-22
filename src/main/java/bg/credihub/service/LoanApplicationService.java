@@ -11,8 +11,6 @@ import bg.credihub.model.entities.LoanProduct;
 import bg.credihub.model.entities.User;
 import bg.credihub.model.enums.ApplicationStatus;
 import bg.credihub.repository.LoanApplicationRepository;
-import jakarta.validation.Valid;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,14 +25,12 @@ public class LoanApplicationService {
     private final LoanApplicationRepository loanApplicationRepository;
     private final UserService userService;
     private final LoanProductService loanProductService;
-    private final ModelMapper modelMapper;
 
     @Autowired
-    public LoanApplicationService(LoanApplicationRepository loanApplicationRepository, UserService userService, LoanProductService loanProductService, ModelMapper modelMapper) {
+    public LoanApplicationService(LoanApplicationRepository loanApplicationRepository, UserService userService, LoanProductService loanProductService) {
         this.loanApplicationRepository = loanApplicationRepository;
         this.userService = userService;
         this.loanProductService = loanProductService;
-        this.modelMapper = modelMapper;
     }
 
     public void createLoanApplication(UUID userId, LoanApplicationDTO loanApplicationDTO) {
@@ -116,20 +112,6 @@ public class LoanApplicationService {
         return loanApplication;
     }
 
-    public LoanApplication getById(UUID id) {
-        return loanApplicationRepository.findById(id)
-                .orElseThrow(() -> new LoanApplicationNotFoundException("LoanApplication with id " + id + " not found."));
-    }
-
-    public List<LoanApplication> getAllByUser(UUID userId) {
-        User user = userService.getById(userId);
-        return loanApplicationRepository.findAllByUser(user);
-    }
-
-    public List<LoanApplication> getAll() {
-        return loanApplicationRepository.findAllByOrderByCreatedAtDesc();
-    }
-
     public void approve(UUID id) {
         LoanApplication loanApplication = getById(id);
         validatePendingStatus(loanApplication);
@@ -145,6 +127,19 @@ public class LoanApplicationService {
 
     }
 
+    public LoanApplication getById(UUID id) {
+        return loanApplicationRepository.findById(id)
+                .orElseThrow(() -> new LoanApplicationNotFoundException("LoanApplication with id " + id + " not found."));
+    }
+
+    public List<LoanApplication> getAllByUser(UUID userId) {
+        User user = userService.getById(userId);
+        return loanApplicationRepository.findAllByUser(user);
+    }
+
+    public List<LoanApplication> getAll() {
+        return loanApplicationRepository.findAllByOrderByCreatedAtDesc();
+    }
 
     private void validateLoanProductIsActive(LoanProduct loanProduct) {
         if (!loanProduct.isActive()) {

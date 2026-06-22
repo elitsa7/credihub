@@ -18,6 +18,8 @@ public class SecurityConfig {
                 .formLogin(form -> form.disable())
                 .httpBasic(httpBasic -> httpBasic.disable());
 
+        //Authentication and authorization are handled through custom session-based security via SessionInterceptor
+
         return http.build();
     }
 }
