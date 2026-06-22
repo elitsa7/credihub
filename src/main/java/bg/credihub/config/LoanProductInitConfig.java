@@ -22,9 +22,9 @@ public class LoanProductInitConfig {
             LoanProduct personalLoan = new LoanProduct();
             personalLoan.setName("Personal Loan");
             personalLoan.setDescription("Personal loan for everyday needs");
-            personalLoan.setMinAmount(BigDecimal.valueOf(1000));
-            personalLoan.setMaxAmount(BigDecimal.valueOf(50000));
-            personalLoan.setMinPeriodMonths(6);
+            personalLoan.setMinAmount(BigDecimal.valueOf(100));
+            personalLoan.setMaxAmount(BigDecimal.valueOf(10000));
+            personalLoan.setMinPeriodMonths(2);
             personalLoan.setMaxPeriodMonths(60);
             personalLoan.setBaseInterestRate(BigDecimal.valueOf(5));
             personalLoan.setMonthlyInterestIncrease(BigDecimal.valueOf(0.1));
