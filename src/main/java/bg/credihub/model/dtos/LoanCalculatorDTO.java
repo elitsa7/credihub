@@ -1,9 +1,6 @@
 package bg.credihub.model.dtos;
 
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,10 +17,9 @@ public class LoanCalculatorDTO {
     @NotNull(message = "Loan product is required.")
     private UUID loanProductId;
     @NotNull(message = "Requested amount is required.")
-    @DecimalMin(value = "100.00")
+    @Positive(message = "Amount must be greater than 0.")
     private BigDecimal requestedAmount;
     @NotNull(message = "Period is required.")
-    @Min(1)
-    @Max(120)
+    @Positive(message = "Period must be greater than 0.")
     private Integer periodMonths;
 }

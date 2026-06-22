@@ -170,13 +170,13 @@ public class LoanApplicationService {
         if (requestedAmount.compareTo(loanProduct.getMinAmount()) < 0
                 || requestedAmount.compareTo(loanProduct.getMaxAmount()) > 0) {
             throw new InvalidLoanApplicationException(
-                    "Requested amount is out of range.");
+                    "Amount must be between " + loanProduct.getMinAmount() + " and " + loanProduct.getMaxAmount() + " EUR.");
         }
 
         if (periodMonths < loanProduct.getMinPeriodMonths()
                 || periodMonths > loanProduct.getMaxPeriodMonths()) {
             throw new InvalidLoanApplicationException(
-                    "Selected period is out of range.");
+                    "Period must be between " + loanProduct.getMinPeriodMonths() + " and " + loanProduct.getMaxPeriodMonths() + " months.");
         }
     }
 
