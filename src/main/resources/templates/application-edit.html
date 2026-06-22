@@ -12,9 +12,13 @@
         <div class="col-lg-6">
             <div class="card shadow-lg border-0">
                 <div class="card-body p-4">
-                    <h2 class="text-center mb-4">Loan Application</h2>
+                    <h2 class="text-center mb-4">Edit Loan Application</h2>
 
-                    <form th:action="@{/applications/create}" th:object="${loanApplicationDTO}" method="post">
+                    <form th:action="@{/applications/{id}(id=${applicationId})}"
+                          th:object="${loanApplicationDTO}" method="post">
+
+                        <input type="hidden" name="_method" value="put">
+
                         <div class="mb-3">
                             <label class="form-label">Loan Product</label>
                             <select class="form-select" th:field="*{loanProductId}">

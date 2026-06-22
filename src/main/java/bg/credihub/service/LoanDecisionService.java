@@ -21,14 +21,13 @@ public class LoanDecisionService {
     private final LoanDecisionRepository loanDecisionRepository;
     private final UserService userService;
     private final LoanApplicationService loanApplicationService;
-    private final LoanDecisionDTO loanDecisionDTO;
+
 
     @Autowired
-    public LoanDecisionService(LoanDecisionRepository loanDecisionRepository, UserService userService, LoanApplicationService loanApplicationService, LoanDecisionDTO loanDecisionDTO) {
+    public LoanDecisionService(LoanDecisionRepository loanDecisionRepository, UserService userService, LoanApplicationService loanApplicationService) {
         this.loanDecisionRepository = loanDecisionRepository;
         this.userService = userService;
         this.loanApplicationService = loanApplicationService;
-        this.loanDecisionDTO = loanDecisionDTO;
     }
 
     public void reviewApplication(UUID applicationId, UUID adminId, LoanDecisionDTO loanDecisionDTO) {

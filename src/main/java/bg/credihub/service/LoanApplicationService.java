@@ -11,6 +11,7 @@ import bg.credihub.model.entities.LoanProduct;
 import bg.credihub.model.entities.User;
 import bg.credihub.model.enums.ApplicationStatus;
 import bg.credihub.repository.LoanApplicationRepository;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,6 +59,27 @@ public class LoanApplicationService {
         loanApplication.setUser(user);
         loanApplication.setStatus(ApplicationStatus.PENDING);
         loanApplication.setCreatedAt(LocalDateTime.now());
+        applyCalculatedValues(loanApplication, loanProduct);
+
+        loanApplicationRepository.save(loanApplication);
+    }
+
+    public void updateLoanApplication(UUID id, UUID userId, LoanApplicationDTO loanApplicationDTO) {
+        LoanApplication loanApplication = getById(id);
+        validateOwner(loanApplication, userId);
+        validatePendingStatus(loanApplication);
+
+        LoanProduct loanProduct = loanProductService.getById(loanApplicationDTO.getLoanProductId());
+        validateLoanProductIsActive(loanProduct);
+        validateAmountAndPeriod(loanApplicationDTO.getRequestedAmount(), loanApplicationDTO.getPeriodMonths(), loanProduct);
+        validateMonthlyIncome(loanApplicationDTO, loanProduct);
+
+        loanApplication.setRequestedAmount(loanApplicationDTO.getRequestedAmount());
+        loanApplication.setPeriodMonths(loanApplicationDTO.getPeriodMonths());
+        loanApplication.setMonthlyIncome(loanApplicationDTO.getMonthlyIncome());
+        loanApplication.setLoanPurpose(loanApplicationDTO.getPurpose());
+        loanApplication.setLoanProduct(loanProduct);
+
         applyCalculatedValues(loanApplication, loanProduct);
 
         loanApplicationRepository.save(loanApplication);

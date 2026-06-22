@@ -75,6 +75,10 @@
 
                         <a th:href="@{/applications}" class="btn btn-secondary">Back</a>
 
+                        <a th:if="${loanApplication.status.name() == 'PENDING'}"
+                           th:href="@{/applications/{id}/edit(id=${loanApplication.id})}"
+                           class="btn btn-warning text-white">Edit Application</a>
+
                         <form th:if="${loanApplication.status.name() == 'PENDING'}"
                               th:action="@{/applications/{id}/cancel(id=${loanApplication.id})}"
                               method="post">
