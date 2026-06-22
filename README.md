@@ -26,6 +26,9 @@ CrediHub is a web-based loan management platform built with Spring Boot. The app
 * Approve applications
 * Reject applications
 * Dashboard for application management
+* Manage loan products
+* Edit loan product settings
+* Activate / deactivate loan products
 
 ### Main Functionalities
 1. Create Loan Application
@@ -55,6 +58,16 @@ CrediHub is a web-based loan management platform built with Spring Boot. The app
 * Manage user roles
 * Promote users to moderators
 * Remove moderator privileges
+* Manage loan products
+* Edit loan product parameters
+
+## Security
+
+* Session-based authentication
+* Request interception using a custom SessionInterceptor
+* Protected admin and moderator endpoints
+* Role-based access control
+* Automatic redirect for unauthorized users
 
 ## Screenshots
 
