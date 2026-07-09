@@ -25,7 +25,7 @@ public class AdminController {
     @GetMapping("/dashboard")
     public ModelAndView dashboard() {
         ModelAndView mav = new ModelAndView("admin-dashboard");
-        mav.addObject("applications", loanApplicationService.getAll());
+        mav.addObject("applications", loanApplicationService.getAllForAdmin());
         return mav;
     }
 
@@ -44,7 +44,7 @@ public class AdminController {
     @GetMapping("/users")
     public ModelAndView users() {
         ModelAndView mav = new ModelAndView("admin-users");
-        mav.addObject("users", userService.getAllWithoutAdmin());
+        mav.addObject("users", userService.getAllWithoutAdminView());
         return mav;
     }
 

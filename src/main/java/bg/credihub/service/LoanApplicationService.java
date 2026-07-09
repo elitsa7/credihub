@@ -4,8 +4,11 @@ import bg.credihub.exception.InvalidLoanApplicationException;
 import bg.credihub.exception.InvalidLoanProductException;
 import bg.credihub.exception.LoanApplicationNotFoundException;
 import bg.credihub.exception.UnauthorizedActionException;
-import bg.credihub.model.dtos.LoanApplicationDTO;
-import bg.credihub.model.dtos.LoanCalculatorDTO;
+import bg.credihub.mapper.LoanApplicationMapper;
+import bg.credihub.model.dtos.application.AdminLoanApplicationViewDTO;
+import bg.credihub.model.dtos.application.LoanApplicationDTO;
+import bg.credihub.model.dtos.application.LoanApplicationViewDTO;
+import bg.credihub.model.dtos.calculator.LoanCalculatorDTO;
 import bg.credihub.model.entities.LoanApplication;
 import bg.credihub.model.entities.LoanProduct;
 import bg.credihub.model.entities.User;
@@ -25,12 +28,17 @@ public class LoanApplicationService {
     private final LoanApplicationRepository loanApplicationRepository;
     private final UserService userService;
     private final LoanProductService loanProductService;
+    private final LoanApplicationMapper loanApplicationMapper;
 
     @Autowired
-    public LoanApplicationService(LoanApplicationRepository loanApplicationRepository, UserService userService, LoanProductService loanProductService) {
+    public LoanApplicationService(LoanApplicationRepository loanApplicationRepository,
+                                  UserService userService,
+                                  LoanProductService loanProductService,
+                                  LoanApplicationMapper loanApplicationMapper) {
         this.loanApplicationRepository = loanApplicationRepository;
         this.userService = userService;
         this.loanProductService = loanProductService;
+        this.loanApplicationMapper = loanApplicationMapper;
     }
 
     public void createLoanApplication(UUID userId, LoanApplicationDTO loanApplicationDTO) {
@@ -91,13 +99,20 @@ public class LoanApplicationService {
         loanApplicationRepository.save(loanApplication);
     }
 
-    public LoanApplication getApplicationDetails(UUID applicationId, UUID userId) {
+    public LoanApplicationViewDTO getApplicationDetails(UUID applicationId, UUID userId) {
         LoanApplication loanApplication = getById(applicationId);
         validateOwner(loanApplication, userId);
-        return loanApplication;
+        return loanApplicationMapper.toViewDto(loanApplication);
     }
 
-    public LoanApplication calculate(LoanCalculatorDTO loanCalculatorDTO) {
+    public LoanApplicationDTO getApplicationForEdit(UUID applicationId, UUID userId) {
+        LoanApplication loanApplication = getById(applicationId);
+        validateOwner(loanApplication, userId);
+        validatePendingStatus(loanApplication);
+        return loanApplicationMapper.toEditDto(loanApplication);
+    }
+
+    public LoanCalculatorDTO calculate(LoanCalculatorDTO loanCalculatorDTO) {
         LoanProduct loanProduct = loanProductService.getById(loanCalculatorDTO.getLoanProductId());
 
         validateLoanProductIsActive(loanProduct);
@@ -109,7 +124,7 @@ public class LoanApplicationService {
 
         applyCalculatedValues(loanApplication, loanProduct);
 
-        return loanApplication;
+        return loanApplicationMapper.toCalculatorDto(loanApplication);
     }
 
     public void approve(UUID id) {
@@ -132,13 +147,19 @@ public class LoanApplicationService {
                 .orElseThrow(() -> new LoanApplicationNotFoundException("LoanApplication with id " + id + " not found."));
     }
 
-    public List<LoanApplication> getAllByUser(UUID userId) {
+    public List<LoanApplicationViewDTO> getAllByUser(UUID userId) {
         User user = userService.getById(userId);
-        return loanApplicationRepository.findAllByUser(user);
+        return loanApplicationRepository.findAllByUser(user)
+                .stream()
+                .map(loanApplicationMapper::toViewDto)
+                .toList();
     }
 
-    public List<LoanApplication> getAll() {
-        return loanApplicationRepository.findAllByOrderByCreatedAtDesc();
+    public List<AdminLoanApplicationViewDTO> getAllForAdmin() {
+        return loanApplicationRepository.findAllByOrderByCreatedAtDesc()
+                .stream()
+                .map(loanApplicationMapper::toAdminViewDto)
+                .toList();
     }
 
     private void validateLoanProductIsActive(LoanProduct loanProduct) {

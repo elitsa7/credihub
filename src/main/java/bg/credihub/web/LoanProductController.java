@@ -1,7 +1,6 @@
 package bg.credihub.web;
 
-import bg.credihub.model.dtos.LoanProductDTO;
-import bg.credihub.model.entities.LoanProduct;
+import bg.credihub.model.dtos.product.LoanProductDTO;
 import bg.credihub.service.LoanProductService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -24,29 +23,15 @@ public class LoanProductController {
     @GetMapping
     public ModelAndView getProducts() {
         ModelAndView mav = new ModelAndView("admin-products");
-        mav.addObject("products", loanProductService.getAll());
+        mav.addObject("products", loanProductService.getAllView());
         return mav;
     }
 
     @GetMapping("/{id}/edit")
     public ModelAndView edit(@PathVariable UUID id) {
-        LoanProduct product = loanProductService.getById(id);
-
-        LoanProductDTO loanProductDTO = new LoanProductDTO();
-
-        loanProductDTO.setName(product.getName());
-        loanProductDTO.setDescription(product.getDescription());
-        loanProductDTO.setMinAmount(product.getMinAmount());
-        loanProductDTO.setMaxAmount(product.getMaxAmount());
-        loanProductDTO.setMinPeriodMonths(product.getMinPeriodMonths());
-        loanProductDTO.setMaxPeriodMonths(product.getMaxPeriodMonths());
-        loanProductDTO.setBaseInterestRate(product.getBaseInterestRate());
-        loanProductDTO.setMonthlyInterestIncrease(product.getMonthlyInterestIncrease());
-        loanProductDTO.setActive(product.isActive());
-
         ModelAndView mav = new ModelAndView("product-edit");
 
-        mav.addObject("loanProductDTO", loanProductDTO);
+        mav.addObject("loanProductDTO", loanProductService.getEditDto(id));
         mav.addObject("productId", id);
 
         return mav;

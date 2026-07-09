@@ -1,6 +1,5 @@
-package bg.credihub.model.dtos;
+package bg.credihub.model.dtos.calculator;
 
-import bg.credihub.model.enums.LoanPurpose;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,7 +13,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoanApplicationDTO {
+public class LoanCalculatorDTO {
     @NotNull(message = "Loan product is required.")
     private UUID loanProductId;
     @NotNull(message = "Requested amount is required.")
@@ -23,9 +22,7 @@ public class LoanApplicationDTO {
     @NotNull(message = "Period is required.")
     @Positive(message = "Period must be greater than 0.")
     private Integer periodMonths;
-    @NotNull(message = "Monthly income is required.")
-    @Positive(message = "Monthly income must be greater than 0.")
-    private BigDecimal monthlyIncome;
-    @NotNull(message = "Purpose is required.")
-    private LoanPurpose purpose;
+    private BigDecimal interestRate;
+    private BigDecimal monthlyPayment;
+    private BigDecimal totalRepaymentAmount;
 }

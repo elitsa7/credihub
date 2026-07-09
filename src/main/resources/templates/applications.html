@@ -29,7 +29,7 @@
 
         <tbody th:if="${!applications.isEmpty()}">
         <tr th:each="loanApplication : ${applications}">
-            <td th:text="${loanApplication.loanProduct.name}"></td>
+            <td th:text="${loanApplication.loanProductName}"></td>
             <td th:text="${loanApplication.requestedAmount}"></td>
             <td th:text="${loanApplication.periodMonths}"></td>
             <td>

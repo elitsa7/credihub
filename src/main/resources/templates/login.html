@@ -16,33 +16,27 @@
 
                         <h2 class="text-center mb-4">Login</h2>
 
-                        <form th:object="${userLoginDTO}"
-                              th:action="@{/auth/login}"
-                              method="post">
+                        <form th:action="@{/login}" method="post">
 
                             <div class="mb-3">
-                                <label class="form-label">Email</label>
-                                <input type="email" class="form-control" th:field="*{email}">
-                                <small class="text-danger" th:if="${#fields.hasErrors('email')}"
-                                       th:errors="*{email}"></small>
+                                <label>Email</label>
+                                <input type="email" class="form-control" name="email" required>
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label">Password</label>
-                                <input type="password" class="form-control" th:field="*{password}">
-                                <small class="text-danger" th:if="${#fields.hasErrors('password')}"
-                                       th:errors="*{password}"></small>
+                                <label>Password</label>
+                                <input type="password" class="form-control" name="password" required>
                             </div>
 
-                            <p class="text-danger text-center" th:if="${loginError}" th:text="${loginError}"></p>
-
-                            <div class="d-grid mt-4">
-                                <button type="submit" class="btn btn-primary">Login</button>
+                            <div class="alert alert-danger" th:if="${param.error}">
+                                Invalid email or password.
                             </div>
+
+                            <button class="btn btn-primary w-100">Login</button>
 
                             <div class="text-center mt-3">
                                 <p>Don't have an account?
-                                    <a th:href="@{/auth/register}" class="text-decoration-none">Register</a>
+                                    <a th:href="@{/register}" class="text-decoration-none">Register</a>
                                 </p>
                             </div>
                         </form>

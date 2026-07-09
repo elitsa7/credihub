@@ -1,10 +1,7 @@
 package bg.credihub.web;
 
-import bg.credihub.model.dtos.user.UserLoginDTO;
 import bg.credihub.model.dtos.user.UserRegisterDTO;
-import bg.credihub.model.entities.User;
 import bg.credihub.service.UserService;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -15,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/auth")
 public class AuthController {
     private final UserService userService;
 
@@ -25,32 +21,7 @@ public class AuthController {
 
     @GetMapping("/login")
     public ModelAndView getLoginPage() {
-        ModelAndView mav = new ModelAndView("login");
-        mav.addObject("userLoginDTO", new UserLoginDTO());
-        return mav;
-    }
-
-    @PostMapping("/login")
-    public ModelAndView login(@Valid @ModelAttribute UserLoginDTO userLoginDTO,
-                              BindingResult bindingResult,
-                              HttpSession session) {
-        if (bindingResult.hasErrors()) {
-            ModelAndView mav = new ModelAndView("login");
-            mav.addObject("userLoginDTO", userLoginDTO);
-            return mav;
-        }
-
-        try {
-            User user = userService.login(userLoginDTO);
-            session.setAttribute("user_id", user.getId());
-            return new ModelAndView("redirect:/");
-
-        } catch (RuntimeException e) {
-            ModelAndView mav = new ModelAndView("login");
-            mav.addObject("userLoginDTO", userLoginDTO);
-            mav.addObject("loginError", "Invalid username or password");
-            return mav;
-        }
+        return new ModelAndView("login");
     }
 
     @GetMapping("/register")
@@ -71,7 +42,7 @@ public class AuthController {
 
         try {
             userService.register(userRegisterDTO);
-            return new ModelAndView("redirect:/auth/login");
+            return new ModelAndView("redirect:/login");
 
         } catch (RuntimeException e) {
             ModelAndView mav = new ModelAndView("register");
@@ -79,11 +50,5 @@ public class AuthController {
             mav.addObject("registerError", e.getMessage());
             return mav;
         }
-    }
-
-    @GetMapping("/logout")
-    public ModelAndView getLogoutPage(HttpSession session) {
-        session.invalidate();
-        return new ModelAndView("redirect:/");
     }
 }

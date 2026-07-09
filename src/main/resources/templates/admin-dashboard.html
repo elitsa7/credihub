@@ -29,10 +29,10 @@
 
                 <tbody>
                 <tr th:each="loanApplication : ${applications}">
-                    <td th:text="${loanApplication.user.firstName + ' ' + loanApplication.user.getLastName() }"></td>
-                    <td th:text="${loanApplication.user.email}"></td>
-                    <td th:text="${loanApplication.user.identificationNumber}"></td>
-                    <td th:text="${loanApplication.loanProduct.name}"></td>
+                    <td th:text="${loanApplication.userFullName}"></td>
+                    <td th:text="${loanApplication.userEmail}"></td>
+                    <td th:text="${loanApplication.userIdentificationNumber}"></td>
+                    <td th:text="${loanApplication.loanProductName}"></td>
                     <td th:text="${loanApplication.requestedAmount + ' EUR'}"></td>
                     <td th:text="${loanApplication.periodMonths + ' months'}"></td>
                     <td th:text="${loanApplication.monthlyIncome + ' EUR'}"></td>

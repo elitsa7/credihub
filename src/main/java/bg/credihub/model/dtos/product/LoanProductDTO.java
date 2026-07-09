@@ -1,4 +1,4 @@
-package bg.credihub.model.dtos;
+package bg.credihub.model.dtos.product;
 
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;

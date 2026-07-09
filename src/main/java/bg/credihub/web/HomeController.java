@@ -1,7 +1,6 @@
 package bg.credihub.web;
 
-import bg.credihub.model.dtos.LoanCalculatorDTO;
-import bg.credihub.model.entities.LoanApplication;
+import bg.credihub.model.dtos.calculator.LoanCalculatorDTO;
 import bg.credihub.service.LoanApplicationService;
 import bg.credihub.service.LoanProductService;
 import jakarta.validation.Valid;
@@ -26,7 +25,7 @@ public class HomeController {
     public ModelAndView home() {
         ModelAndView mav = new ModelAndView("home");
         mav.addObject("loanCalculatorDTO", new LoanCalculatorDTO());
-        mav.addObject("loanProducts", loanProductService.getAll());
+        mav.addObject("loanProducts", loanProductService.getAllView());
         return mav;
     }
 
@@ -37,20 +36,19 @@ public class HomeController {
 
         if (bindingResult.hasErrors()) {
             mav.addObject("loanCalculatorDTO", loanCalculatorDTO);
-            mav.addObject("loanProducts", loanProductService.getAll());
+            mav.addObject("loanProducts", loanProductService.getAllView());
             return mav;
         }
 
         try {
-            LoanApplication result = loanApplicationService.calculate(loanCalculatorDTO);
-            mav.addObject("result", result);
+            mav.addObject("result", loanApplicationService.calculate(loanCalculatorDTO));
 
         } catch (RuntimeException e) {
             mav.addObject("calculateError", e.getMessage());
         }
 
         mav.addObject("loanCalculatorDTO", loanCalculatorDTO);
-        mav.addObject("loanProducts", loanProductService.getAll());
+        mav.addObject("loanProducts", loanProductService.getAllView());
 
         return mav;
     }

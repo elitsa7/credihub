@@ -1,0 +1,28 @@
+package bg.credihub.model.dtos.application;
+
+import bg.credihub.model.enums.ApplicationStatus;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.UUID;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class AdminLoanApplicationViewDTO {
+    private UUID id;
+    private String userFullName;
+    private String userEmail;
+    private String userIdentificationNumber;
+    private String loanProductName;
+    private BigDecimal requestedAmount;
+    private Integer periodMonths;
+    private BigDecimal monthlyIncome;
+    private ApplicationStatus status;
+    private LocalDateTime createdAt;
+}

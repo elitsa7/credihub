@@ -1,7 +1,9 @@
 package bg.credihub.service;
 
 import bg.credihub.exception.*;
-import bg.credihub.model.dtos.user.UserLoginDTO;
+import bg.credihub.mapper.UserMapper;
+import bg.credihub.model.dtos.user.UserAdminViewDTO;
+import bg.credihub.model.dtos.user.UserProfileDTO;
 import bg.credihub.model.dtos.user.UserRegisterDTO;
 import bg.credihub.model.entities.User;
 import bg.credihub.model.enums.Role;
@@ -19,12 +21,17 @@ public class UserService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
     private final PasswordEncoder passwordEncoder;
+    private final UserMapper userMapper;
 
     @Autowired
-    public UserService(UserRepository userRepository, ModelMapper modelMapper, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository,
+                       ModelMapper modelMapper,
+                       PasswordEncoder passwordEncoder,
+                       UserMapper userMapper) {
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
         this.passwordEncoder = passwordEncoder;
+        this.userMapper = userMapper;
     }
 
     public void register(UserRegisterDTO userRegisterDTO) {
@@ -49,17 +56,6 @@ public class UserService {
         user.setRole(Role.USER);
 
         userRepository.save(user);
-    }
-
-    public User login(UserLoginDTO userLoginDTO) {
-        User user = userRepository.findByEmail(userLoginDTO.getEmail())
-                .orElseThrow(() -> new InvalidLoginException("Invalid email or password."));
-
-        if (!passwordEncoder.matches(userLoginDTO.getPassword(), user.getPassword())) {
-            throw new InvalidLoginException("Invalid email or password.");
-        }
-
-        return user;
     }
 
     public void makeModerator(UUID userId) {
@@ -89,10 +85,32 @@ public class UserService {
                 .orElseThrow(() -> new UserNotFoundException("User not found."));
     }
 
-    public List<User> getAllWithoutAdmin() {
+    public List<UserAdminViewDTO> getAllWithoutAdminView() {
         return userRepository.findAll()
                 .stream()
                 .filter(user -> user.getRole() != Role.ADMIN)
+                .map(userMapper::toAdminViewDto)
                 .toList();
     }
+
+    public UserProfileDTO getProfile(UUID id) {
+        User user = getById(id);
+        return modelMapper.map(user, UserProfileDTO.class);
+    }
+
+    public void updateProfile(UUID userId, UserProfileDTO userProfileDTO) {
+        User user = getById(userId);
+
+        userRepository.findByPhoneNumber(userProfileDTO.getPhoneNumber())
+                .filter(exists -> !exists.getId().equals(userId))
+                .ifPresent(exists -> {
+                    throw new PhoneNumberAlreadyExistsException("Phone number already exists.");
+                });
+
+        modelMapper.map(userProfileDTO, user);
+
+        userRepository.save(user);
+    }
+
+
 }
