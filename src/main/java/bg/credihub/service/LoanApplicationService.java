@@ -1,5 +1,6 @@
 package bg.credihub.service;
 
+import bg.credihub.client.PaymentClient;
 import bg.credihub.exception.InvalidLoanApplicationException;
 import bg.credihub.exception.InvalidLoanProductException;
 import bg.credihub.exception.LoanApplicationNotFoundException;
@@ -29,16 +30,19 @@ public class LoanApplicationService {
     private final UserService userService;
     private final LoanProductService loanProductService;
     private final LoanApplicationMapper loanApplicationMapper;
+    private final PaymentClient paymentClient;
 
     @Autowired
     public LoanApplicationService(LoanApplicationRepository loanApplicationRepository,
                                   UserService userService,
                                   LoanProductService loanProductService,
-                                  LoanApplicationMapper loanApplicationMapper) {
+                                  LoanApplicationMapper loanApplicationMapper,
+                                  PaymentClient paymentClient) {
         this.loanApplicationRepository = loanApplicationRepository;
         this.userService = userService;
         this.loanProductService = loanProductService;
         this.loanApplicationMapper = loanApplicationMapper;
+        this.paymentClient = paymentClient;
     }
 
     public void createLoanApplication(UUID userId, LoanApplicationDTO loanApplicationDTO) {
@@ -132,6 +136,7 @@ public class LoanApplicationService {
         validatePendingStatus(loanApplication);
         loanApplication.setStatus(ApplicationStatus.APPROVED);
         loanApplicationRepository.save(loanApplication);
+        paymentClient.createLoanAccount(loanApplicationMapper.toLoanAccountRequest(loanApplication));
     }
 
     public void reject(UUID id) {

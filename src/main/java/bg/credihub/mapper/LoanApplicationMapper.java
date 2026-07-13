@@ -4,8 +4,11 @@ import bg.credihub.model.dtos.application.AdminLoanApplicationViewDTO;
 import bg.credihub.model.dtos.application.LoanApplicationDTO;
 import bg.credihub.model.dtos.application.LoanApplicationViewDTO;
 import bg.credihub.model.dtos.calculator.LoanCalculatorDTO;
+import bg.credihub.model.dtos.payment.LoanAccountRequest;
 import bg.credihub.model.entities.LoanApplication;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
 
 @Component
 public class LoanApplicationMapper {
@@ -59,5 +62,17 @@ public class LoanApplicationMapper {
         dto.setMonthlyPayment(application.getMonthlyPayment());
         dto.setTotalRepaymentAmount(application.getTotalRepaymentAmount());
         return dto;
+    }
+
+    public LoanAccountRequest toLoanAccountRequest(LoanApplication application) {
+        return LoanAccountRequest.builder()
+                .applicationId(application.getId())
+                .userId(application.getUser().getId())
+                .principalAmount(application.getRequestedAmount())
+                .annualInterestRate(application.getInterestRate())
+                .monthlyPayment(application.getMonthlyPayment())
+                .periodMonths(application.getPeriodMonths())
+                .startDate(LocalDate.now())
+                .build();
     }
 }
