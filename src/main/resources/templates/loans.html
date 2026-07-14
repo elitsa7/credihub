@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"></head>
+<body class="bg-light d-flex flex-column min-vh-100">
+<nav th:replace="~{fragments/navbar}"></nav>
+<div class="container mt-5">
+    <h2 class="text-center mb-5">My Loans</h2>
+    <div th:if="${#lists.isEmpty(loans)}" class="alert alert-info">
+        You don't have any active loans yet.
+    </div>
+    <div class="row">
+        <div class="col-lg-6 col-xl-5 mb-4"
+             th:each="loan : ${loans}">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Loan Account</h5>
+                    <p>
+                        <strong>Principal:</strong>
+                        <span th:text="${loan.principalAmount}"></span> EUR
+                    </p>
+                    <p>
+                        <strong>Remaining Balance:</strong>
+                        <span th:text="${loan.remainingBalance}"></span> EUR
+                    </p>
+                    <p>
+                        <strong>Monthly Payment:</strong>
+                        <span th:text="${loan.monthlyPayment}"></span> EUR
+                    </p>
+                    <p>
+                        <strong>Progress:</strong>
+                        <span th:text="${loan.paidInstallments}"></span>
+                        <span>/</span>
+                        <span th:text="${loan.periodMonths}"></span>
+                        <span>installments</span>
+                    </p>
+                    <p>
+                        <strong>Start Date:</strong>
+                        <span th:text="${#temporals.format(loan.startDate,'dd MMM yyyy')}"></span>
+                    </p>
+                    <p>
+                        <strong>End Date:</strong>
+                        <span th:text="${#temporals.format(loan.endDate,'dd MMM yyyy')}"></span>
+                    </p>
+                    <p>
+                    <span class="badge rounded-pill"
+                          th:classappend="${loan.status == 'ACTIVE'} ? 'bg-success' : 'bg-secondary'"
+                          th:text="${loan.status}"></span>
+                    </p>
+
+                    <a class="btn btn-outline-primary w-100"
+                       th:href="@{/loans/{id}/installments(id=${loan.id})}">View Repayment Schedule
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

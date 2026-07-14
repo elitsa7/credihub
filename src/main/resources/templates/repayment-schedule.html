@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head}"></head>
+<body class="bg-light d-flex flex-column min-vh-100">
+<nav th:replace="~{fragments/navbar}"></nav>
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Repayment Schedule</h2>
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <table class="table table-hover align-middle">
+
+                <thead class="table-light">
+                <tr>
+                    <th>#</th>
+                    <th>Due Date</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th class="text-center">Action</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr th:each="installment : ${installments}">
+                    <td th:text="${installment.installmentNumber}"></td>
+                    <td th:text="${installment.dueDate}"></td>
+                    <td th:text="${installment.amount + ' BGN'}"></td>
+                    <td>
+                        <span class="badge rounded-pill"
+                              th:classappend="${installment.status == 'PAID'} ? 'bg-success' : 'bg-warning text-dark'"
+                              th:text="${installment.status}"></span>
+                    </td>
+                    <td class="text-center">
+                        <a th:if="${installment.payable}" class="btn btn-success">Pay</a>
+                        <button th:unless="${installment.payable}" class="btn btn-secondary" disabled>Locked</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

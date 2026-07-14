@@ -20,6 +20,8 @@
 
                 <a class="nav-link" th:href="@{/applications}">My applications</a>
 
+                <a class="nav-link" th:href="@{/loans}">Loans</a>
+
                 <a class="nav-link" sec:authorize="hasAnyRole('ADMIN','MODERATOR')"
                    th:href="@{/admin/dashboard}">Dashboard</a>
 

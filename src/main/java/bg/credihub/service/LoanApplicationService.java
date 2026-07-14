@@ -17,6 +17,7 @@ import bg.credihub.model.enums.ApplicationStatus;
 import bg.credihub.repository.LoanApplicationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -131,6 +132,7 @@ public class LoanApplicationService {
         return loanApplicationMapper.toCalculatorDto(loanApplication);
     }
 
+    @Transactional
     public void approve(UUID id) {
         LoanApplication loanApplication = getById(id);
         validatePendingStatus(loanApplication);
@@ -144,7 +146,6 @@ public class LoanApplicationService {
         validatePendingStatus(loanApplication);
         loanApplication.setStatus(ApplicationStatus.REJECTED);
         loanApplicationRepository.save(loanApplication);
-
     }
 
     public LoanApplication getById(UUID id) {
