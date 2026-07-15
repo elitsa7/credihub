@@ -30,8 +30,14 @@
                               th:text="${installment.status}"></span>
                     </td>
                     <td class="text-center">
-                        <a th:if="${installment.payable}" class="btn btn-success">Pay</a>
+                        <form th:if="${installment.payable}"
+                              th:action="@{/installments/{installmentId}/pay(installmentId=${installment.id})}"
+                              method="post">
+                            <button type="submit" class="btn btn-success">Pay</button>
+                        </form>
+
                         <button th:unless="${installment.payable}" class="btn btn-secondary" disabled>Locked</button>
+
                     </td>
                 </tr>
                 </tbody>

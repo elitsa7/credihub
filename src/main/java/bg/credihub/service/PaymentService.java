@@ -1,6 +1,7 @@
 package bg.credihub.service;
 
 import bg.credihub.client.PaymentClient;
+import bg.credihub.model.dtos.payment.CheckoutSessionResponse;
 import bg.credihub.model.dtos.payment.InstallmentResponse;
 import bg.credihub.model.dtos.payment.LoanAccountResponse;
 import org.springframework.stereotype.Service;
@@ -22,5 +23,9 @@ public class PaymentService {
 
     public List<LoanAccountResponse> getUserLoans(UUID userId) {
         return paymentClient.getUserLoans(userId);
+    }
+
+    public CheckoutSessionResponse createCheckoutSession(UUID installmentId) {
+        return paymentClient.createCheckoutSession(installmentId);
     }
 }

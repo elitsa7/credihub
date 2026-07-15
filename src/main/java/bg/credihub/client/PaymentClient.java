@@ -1,5 +1,7 @@
 package bg.credihub.client;
 
+import bg.credihub.config.FeignConfig;
+import bg.credihub.model.dtos.payment.CheckoutSessionResponse;
 import bg.credihub.model.dtos.payment.InstallmentResponse;
 import bg.credihub.model.dtos.payment.LoanAccountRequest;
 import bg.credihub.model.dtos.payment.LoanAccountResponse;
@@ -13,7 +15,8 @@ import java.util.List;
 import java.util.UUID;
 
 @FeignClient(name = "payment-service",
-        url = "${payment.service.url}")
+        url = "${payment.service.url}",
+        configuration = FeignConfig.class)
 public interface PaymentClient {
 
     @PostMapping("/api/v1/loan-accounts")
@@ -25,4 +28,6 @@ public interface PaymentClient {
     @GetMapping("/api/v1/loan-accounts/user/{userId}")
     List<LoanAccountResponse> getUserLoans(@PathVariable UUID userId);
 
+    @PostMapping("/api/v1/payments/{installmentId}/checkout")
+    CheckoutSessionResponse createCheckoutSession(@PathVariable UUID installmentId);
 }
