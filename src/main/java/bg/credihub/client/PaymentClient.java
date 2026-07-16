@@ -28,6 +28,6 @@ public interface PaymentClient {
     @GetMapping("/api/v1/loan-accounts/user/{userId}")
     List<LoanAccountResponse> getUserLoans(@PathVariable UUID userId);
 
-    @PostMapping("/api/v1/payments/{installmentId}/checkout")
+    @PostMapping("/api/v1/installments/{installmentId}/checkout")
     CheckoutSessionResponse createCheckoutSession(@PathVariable UUID installmentId);
 }

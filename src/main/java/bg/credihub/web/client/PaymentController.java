@@ -1,11 +1,9 @@
-package bg.credihub.web;
+package bg.credihub.web.client;
 
-import bg.credihub.model.dtos.payment.CheckoutSessionResponse;
 import bg.credihub.service.PaymentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/payments")
@@ -24,12 +22,5 @@ public class PaymentController {
     @GetMapping("/cancel")
     public String cancel() {
         return "redirect:/loans";
-    }
-
-    @PostMapping("/installments/{installmentId}/pay")
-    public String pay(@PathVariable UUID installmentId) throws Exception {
-        CheckoutSessionResponse response = paymentService.createCheckoutSession(installmentId);
-
-        return "redirect:" + response.getCheckoutUrl();
     }
 }

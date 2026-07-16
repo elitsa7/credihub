@@ -1,4 +1,4 @@
-package bg.credihub.web;
+package bg.credihub.web.client;
 
 import bg.credihub.security.CustomUserDetails;
 import bg.credihub.service.PaymentService;
