@@ -22,9 +22,9 @@ public class AdminController {
         this.userService = userService;
     }
 
-    @GetMapping("/dashboard")
+    @GetMapping("/review")
     public ModelAndView dashboard() {
-        ModelAndView mav = new ModelAndView("admin-dashboard");
+        ModelAndView mav = new ModelAndView("review-applications");
         mav.addObject("applications", loanApplicationService.getAllForAdmin());
         return mav;
     }
@@ -32,13 +32,13 @@ public class AdminController {
     @PostMapping("/applications/{id}/approve")
     public ModelAndView approve(@PathVariable UUID id) {
         loanApplicationService.approve(id);
-        return new ModelAndView("redirect:/admin/dashboard");
+        return new ModelAndView("redirect:/admin/review");
     }
 
     @PostMapping("/applications/{id}/reject")
     public ModelAndView reject(@PathVariable UUID id) {
         loanApplicationService.reject(id);
-        return new ModelAndView("redirect:/admin/dashboard");
+        return new ModelAndView("redirect:/admin/review");
     }
 
     @GetMapping("/users")

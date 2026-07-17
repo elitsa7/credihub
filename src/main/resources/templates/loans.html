@@ -1,25 +1,30 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/head}"></head>
+<head th:replace="~{fragments/head :: head('Loans')}"></head>
 <body class="bg-light d-flex flex-column min-vh-100">
-<nav th:replace="~{fragments/navbar}"></nav>
+<nav th:replace="~{fragments/navbar::navbar}"></nav>
 <div class="container mt-5">
     <h2 class="text-center mb-5">My Loans</h2>
-    <div th:if="${#lists.isEmpty(loans)}" class="alert alert-info">
-        You don't have any active loans yet.
+    <div th:if="${#lists.isEmpty(loans)}"
+         class="card shadow-sm border-0">
+        <div class="card-body text-center py-5">
+            <h5 class="mb-3">No Active Loans Found</h5>
+            <p class="text-muted mb-4">You don't have any active loans. Apply today and get started.</p>
+            <a th:href="@{/applications/create}"  class="btn btn-primary px-5">Apply Now</a>
+        </div>
     </div>
-    <div class="row">
-        <div class="col-lg-6 col-xl-5 mb-4"
+    <div class="row justify-content-center">
+        <div class="col-lg-7 col-xl-6 mb-4"
              th:each="loan : ${loans}">
-            <div class="card shadow-sm h-100">
+            <div class="card shadow h-100">
                 <div class="card-body">
-                    <h5 class="card-title text-center">Loan Account</h5>
+                    <h5 class="card-title text-center">Loan Details</h5>
                     <p>
-                        <strong>Principal:</strong>
+                        <strong>Loan amount:</strong>
                         <span th:text="${loan.principalAmount}"></span> EUR
                     </p>
                     <p>
-                        <strong>Remaining Balance:</strong>
+                        <strong>Outstanding Balance</strong>
                         <span th:text="${loan.remainingBalance}"></span> EUR
                     </p>
                     <p>
@@ -27,7 +32,7 @@
                         <span th:text="${loan.monthlyPayment}"></span> EUR
                     </p>
                     <p>
-                        <strong>Progress:</strong>
+                        <strong>Repayment Progress</strong>
                         <span th:text="${loan.paidInstallments}"></span>
                         <span>/</span>
                         <span th:text="${loan.periodMonths}"></span>
@@ -48,7 +53,7 @@
                     </p>
 
                     <a class="btn btn-outline-primary w-100"
-                       th:href="@{/loans/{id}/installments(id=${loan.id})}">View Repayment Schedule
+                       th:href="@{/loans/{id}/installments(id=${loan.id})}">Repayment Schedule
                     </a>
                 </div>
             </div>

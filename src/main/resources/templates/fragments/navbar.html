@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">>
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body th:fragment="navbar">
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container">
@@ -16,23 +16,23 @@
             </th:block>
 
             <th:block sec:authorize="isAuthenticated()">
-                <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/profile}">Profile</a>
+                <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/profile}">My Profile</a>
 
                 <a class="nav-link" th:href="@{/applications}">My applications</a>
 
-                <a class="nav-link" th:href="@{/loans}">Loans</a>
+                <a class="nav-link" th:href="@{/loans}">My Loans</a>
 
                 <a class="nav-link" sec:authorize="hasAnyRole('ADMIN','MODERATOR')"
-                   th:href="@{/admin/dashboard}">Dashboard</a>
+                   th:href="@{/admin/review}">Review Applications</a>
 
                 <a class="nav-link" sec:authorize="hasRole('ADMIN')"
                    th:href="@{/admin/users}">User Management</a>
 
                 <a class="nav-link" sec:authorize="hasRole('ADMIN')"
-                   th:href="@{/admin/products}">Products</a>
+                   th:href="@{/admin/products}">Loan Products</a>
 
                 <form th:action="@{/logout}" method="post" class="d-inline">
-                    <button type="submit" class="nav-link btn btn-link text-white p-0 border-0">Logout</button>
+                    <button type="submit" class="nav-link btn btn-link text-white p-0 border-0">Sign out</button>
                 </form>
 
             </th:block>

@@ -9,25 +9,28 @@
 
 <div class="container-lg mt-5">
     <h2 class="text-center mb-4">My Applications</h2>
-    <table class="table table-hover align-middle text-center">
+    <div th:if="${applications.isEmpty()}"
+         class="card shadow-sm border-0">
+        <div class="card-body text-center py-5">
+            <h5 class="mb-3">No Applications Found</h5>
+            <p class="text-muted mb-4">You haven't submitted any loan applications yet.</p>
+            <a th:href="@{/applications/create}"  class="btn btn-primary px-5">Apply Now</a>
+        </div>
+    </div>
+
+    <table th:unless="${applications.isEmpty()}"
+           class="table table-hover align-middle text-center">
         <thead>
         <tr>
-            <th scope="col">Product</th>
-            <th scope="col">Amount</th>
-            <th scope="col">Period</th>
-            <th scope="col">Status</th>
-            <th scope="col">Created</th>
-            <th scope="col">Details</th>
+            <th>Product</th>
+            <th>Amount</th>
+            <th>Period</th>
+            <th>Status</th>
+            <th>Created</th>
+            <th>Details</th>
         </tr>
         </thead>
-
-        <tbody th:if="${applications.isEmpty()}">
-        <tr>
-            <td colspan="6" class="text-center py-5 text-muted">No applications found.</td>
-        </tr>
-        </tbody>
-
-        <tbody th:if="${!applications.isEmpty()}">
+        <tbody>
         <tr th:each="loanApplication : ${applications}">
             <td th:text="${loanApplication.loanProductName}"></td>
             <td th:text="${loanApplication.requestedAmount}"></td>
@@ -47,7 +50,7 @@
                 <a th:href="@{/applications/{id}(id=${loanApplication.id})}" class="btn btn-primary">View</a>
             </td>
         </tr>
-        </tbody>
+        <tbody>
     </table>
 </div>
 
