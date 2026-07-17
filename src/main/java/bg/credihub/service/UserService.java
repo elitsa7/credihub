@@ -2,6 +2,7 @@ package bg.credihub.service;
 
 import bg.credihub.exception.*;
 import bg.credihub.mapper.UserMapper;
+import bg.credihub.model.dtos.user.UpdateUserProfileRequest;
 import bg.credihub.model.dtos.user.UserAdminViewDTO;
 import bg.credihub.model.dtos.user.UserProfileDTO;
 import bg.credihub.model.dtos.user.UserRegisterDTO;
@@ -95,22 +96,37 @@ public class UserService {
 
     public UserProfileDTO getProfile(UUID id) {
         User user = getById(id);
-        return modelMapper.map(user, UserProfileDTO.class);
+
+        UserProfileDTO userProfileDTO = modelMapper.map(user, UserProfileDTO.class);
+
+        String idNumber = user.getIdentificationNumber();
+
+        if (idNumber != null && idNumber.length() >= 4) {
+            userProfileDTO.setMaskedIdentificationNumber("*".repeat(idNumber.length() - 4)
+                    + idNumber.substring(idNumber.length() - 4));
+        }
+
+        return userProfileDTO;
     }
 
-    public void updateProfile(UUID userId, UserProfileDTO userProfileDTO) {
+    public UpdateUserProfileRequest getProfileForEdit(UUID id) {
+        User user = getById(id);
+        return modelMapper.map(user, UpdateUserProfileRequest.class);
+    }
+
+    public void updateProfile(UUID userId, UpdateUserProfileRequest userProfileRequest) {
         User user = getById(userId);
 
-        userRepository.findByPhoneNumber(userProfileDTO.getPhoneNumber())
+        userRepository.findByPhoneNumber(userProfileRequest.getPhoneNumber())
                 .filter(exists -> !exists.getId().equals(userId))
                 .ifPresent(exists -> {
                     throw new PhoneNumberAlreadyExistsException("Phone number already exists.");
                 });
 
-        modelMapper.map(userProfileDTO, user);
+        user.setFirstName(userProfileRequest.getFirstName());
+        user.setLastName(userProfileRequest.getLastName());
+        user.setPhoneNumber(userProfileRequest.getPhoneNumber());
 
         userRepository.save(user);
     }
-
-
 }

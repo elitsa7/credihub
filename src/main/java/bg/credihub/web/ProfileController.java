@@ -1,5 +1,7 @@
 package bg.credihub.web;
 
+import bg.credihub.exception.PhoneNumberAlreadyExistsException;
+import bg.credihub.model.dtos.user.UpdateUserProfileRequest;
 import bg.credihub.model.dtos.user.UserProfileDTO;
 import bg.credihub.security.CustomUserDetails;
 import bg.credihub.service.UserService;
@@ -33,25 +35,26 @@ public class ProfileController {
     @GetMapping("/edit")
     public ModelAndView editProfilePage(@AuthenticationPrincipal CustomUserDetails currentUser) {
         ModelAndView mav = new ModelAndView("profile-edit");
-        mav.addObject("userProfileDTO", userService.getProfile(currentUser.getId()));
+        mav.addObject("updateUserProfileRequest", userService.getProfileForEdit(currentUser.getId()));
         return mav;
     }
 
     @PutMapping
     public ModelAndView updateProfile(@AuthenticationPrincipal CustomUserDetails currentUser,
-                                      @Valid @ModelAttribute UserProfileDTO userProfileDTO,
-                                      BindingResult bindingResult) {
+            @Valid @ModelAttribute("user") UpdateUserProfileRequest request,
+            BindingResult bindingResult) {
         ModelAndView mav = new ModelAndView("profile-edit");
 
         if (bindingResult.hasErrors()) {
+            mav.addObject("updateUserProfileRequest", request);
             return mav;
         }
 
         try {
-            userService.updateProfile(currentUser.getId(), userProfileDTO);
+            userService.updateProfile(currentUser.getId(), request);
             return new ModelAndView("redirect:/profile");
-        } catch (Exception e) {
-            mav.addObject("userProfileDTO", userProfileDTO);
+        } catch (RuntimeException e) {
+            mav.addObject("updateUserProfileRequest", request);
             mav.addObject("profileError", e.getMessage());
             return mav;
         }

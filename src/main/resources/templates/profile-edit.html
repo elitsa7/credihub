@@ -19,7 +19,7 @@
                         <h2 class="text-center mb-4">Edit Profile</h2>
 
                         <form th:action="@{/profile}"
-                              th:object="${userProfileDTO}"
+                              th:object="${updateUserProfileRequest}"
                               method="post">
 
                             <input type="hidden" name="_method" value="put"/>
@@ -44,8 +44,9 @@
 
                             <div class="alert alert-danger" th:if="${profileError}" th:text="${profileError}"></div>
 
-                            <div class="d-grid mt-4">
-                                <button class="btn btn-primary">Save Changes</button>
+                            <div class="d-grid gap-2 d-md-flex justify-content-middle mt-4">
+                                <a th:href="@{/profile}" class="btn btn-outline-secondary">Cancel</a>
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
                             </div>
 
                         </form>

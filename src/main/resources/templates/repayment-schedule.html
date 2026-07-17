@@ -23,7 +23,7 @@
                 <tr th:each="installment : ${installments}">
                     <td th:text="${installment.installmentNumber}"></td>
                     <td th:text="${installment.dueDate}"></td>
-                    <td th:text="${installment.amount + ' BGN'}"></td>
+                    <td th:text="${installment.amount + ' EUR'}"></td>
                     <td>
                         <span class="badge rounded-pill"
                               th:classappend="${installment.status == 'PAID'} ? 'bg-success' : 'bg-warning text-dark'"
@@ -45,5 +45,6 @@
         </div>
     </div>
 </div>
+<div th:replace="~{fragments/footer :: footer}"></div>
 </body>
 </html>
