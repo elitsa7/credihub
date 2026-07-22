@@ -1,5 +1,7 @@
 package bg.credihub.web;
 
+import bg.credihub.exception.InvalidLoanApplicationException;
+import bg.credihub.exception.InvalidLoanProductException;
 import bg.credihub.model.dtos.calculator.LoanCalculatorDTO;
 import bg.credihub.service.LoanApplicationService;
 import bg.credihub.service.LoanProductService;
@@ -43,7 +45,7 @@ public class HomeController {
         try {
             mav.addObject("result", loanApplicationService.calculate(loanCalculatorDTO));
 
-        } catch (RuntimeException e) {
+        } catch (InvalidLoanProductException | InvalidLoanApplicationException e) {
             mav.addObject("calculateError", e.getMessage());
         }
 

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('400 - Bad Request')}"></head>
+<body class="bg-light d-flex flex-column min-vh-100">
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+<div class="container text-center mt-5">
+    <h1 class="display-1 text-warning">400</h1>
+    <h2>Bad Request</h2>
+    <p class="lead">The request could not be processed.</p>
+    <p class="text-danger" th:text="${message}"></p>
+    <a th:href="@{/}" class="btn btn-primary mt-3">Back to Home</a>
+</div>
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>

@@ -49,14 +49,7 @@ public class LoanProductController {
             return mav;
         }
 
-        try {
-            loanProductService.update(id, loanProductDTO);
-            return new ModelAndView("redirect:/admin/products");
-
-        } catch (RuntimeException e) {
-            mav.addObject("productError", e.getMessage());
-            mav.addObject("productId", id);
-            return mav;
-        }
+        loanProductService.update(id, loanProductDTO);
+        return new ModelAndView("redirect:/admin/products");
     }
 }

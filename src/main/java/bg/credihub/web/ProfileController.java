@@ -1,5 +1,7 @@
 package bg.credihub.web;
 
+import bg.credihub.exception.EmailAlreadyExistsException;
+import bg.credihub.exception.IdentificationNumberAlreadyExistsException;
 import bg.credihub.exception.PhoneNumberAlreadyExistsException;
 import bg.credihub.model.dtos.user.UpdateUserProfileRequest;
 import bg.credihub.model.dtos.user.UserProfileDTO;
@@ -53,7 +55,8 @@ public class ProfileController {
         try {
             userService.updateProfile(currentUser.getId(), request);
             return new ModelAndView("redirect:/profile");
-        } catch (RuntimeException e) {
+        } catch (PhoneNumberAlreadyExistsException | EmailAlreadyExistsException |
+                 IdentificationNumberAlreadyExistsException e) {
             mav.addObject("updateUserProfileRequest", request);
             mav.addObject("profileError", e.getMessage());
             return mav;

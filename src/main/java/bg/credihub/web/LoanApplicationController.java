@@ -1,5 +1,7 @@
 package bg.credihub.web;
 
+import bg.credihub.exception.InvalidLoanApplicationException;
+import bg.credihub.exception.InvalidLoanProductException;
 import bg.credihub.model.dtos.application.LoanApplicationDTO;
 import bg.credihub.security.CustomUserDetails;
 import bg.credihub.service.LoanApplicationService;
@@ -45,7 +47,7 @@ public class LoanApplicationController {
         try {
             loanApplicationService.createLoanApplication(currentUser.getId(), loanApplicationDTO);
             return new ModelAndView("redirect:/applications");
-        } catch (RuntimeException e) {
+        } catch (InvalidLoanApplicationException | InvalidLoanProductException e) {
             mav.addObject("applicationError", e.getMessage());
             mav.addObject("loanProducts", loanProductService.getAllView());
             return mav;
@@ -104,7 +106,7 @@ public class LoanApplicationController {
             loanApplicationService.updateLoanApplication(id, currentUser.getId(), loanApplicationDTO);
             return new ModelAndView("redirect:/applications/" + id);
 
-        } catch (RuntimeException e) {
+        } catch (InvalidLoanApplicationException | InvalidLoanProductException e) {
             mav.addObject("applicationError", e.getMessage());
             mav.addObject("applicationId", id);
             mav.addObject("loanProducts", loanProductService.getAllView());

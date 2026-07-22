@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('409 - Conflict')}"></head>
+<body class="bg-light d-flex flex-column min-vh-100">
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+<div class="container text-center mt-5">
+    <h1 class="display-1 text-warning">409</h1>
+    <h2>Conflict</h2>
+    <p class="lead">The requested operation could not be completed.</p>
+    <p class="text-danger" th:text="${message}"></p>
+    <а th:href="@{/}" class="btn btn-primary mt-3">Back to Home</а>
+</div>
+<div th:replace="~{fragments/footer :: footer}"></div>
+</body>
+</html>
