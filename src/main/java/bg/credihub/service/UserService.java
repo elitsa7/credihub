@@ -9,6 +9,7 @@ import bg.credihub.model.dtos.user.UserRegisterDTO;
 import bg.credihub.model.entities.User;
 import bg.credihub.model.enums.Role;
 import bg.credihub.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @Service
 public class UserService {
     private final UserRepository userRepository;
@@ -57,28 +59,33 @@ public class UserService {
         user.setRole(Role.USER);
 
         userRepository.save(user);
+        log.info("New user registered with email {}", user.getEmail());
     }
 
     public void makeModerator(UUID userId) {
         User user = getById(userId);
 
         if (user.getRole().equals(Role.ADMIN)) {
+            log.warn("Attempt to change ADMIN role for user {}", userId);
             throw new RoleModificationException("Admin role cannot be changed.");
         }
 
         user.setRole(Role.MODERATOR);
         userRepository.save(user);
+        log.info("User {} promoted to moderator", userId);
     }
 
     public void removeModerator(UUID userId) {
         User user = getById(userId);
 
         if (user.getRole().equals(Role.ADMIN)) {
+            log.warn("Attempt to change ADMIN role for user {}", userId);
             throw new RoleModificationException("Admin role cannot be changed.");
         }
 
         user.setRole(Role.USER);
         userRepository.save(user);
+        log.info("Moderator {} demoted to user", userId);
     }
 
     public User getById(UUID id) {
@@ -128,5 +135,6 @@ public class UserService {
         user.setPhoneNumber(userProfileRequest.getPhoneNumber());
 
         userRepository.save(user);
+        log.info("User {} updated profile", userId);
     }
 }

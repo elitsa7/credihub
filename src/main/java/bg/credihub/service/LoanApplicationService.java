@@ -15,6 +15,7 @@ import bg.credihub.model.entities.LoanProduct;
 import bg.credihub.model.entities.User;
 import bg.credihub.model.enums.ApplicationStatus;
 import bg.credihub.repository.LoanApplicationRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +26,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @Service
 public class LoanApplicationService {
     private final LoanApplicationRepository loanApplicationRepository;
@@ -71,6 +73,7 @@ public class LoanApplicationService {
         applyCalculatedValues(loanApplication, loanProduct);
 
         loanApplicationRepository.save(loanApplication);
+        log.info("User {} created loan application {}", userId, loanApplication.getId());
     }
 
     public void updateLoanApplication(UUID id, UUID userId, LoanApplicationDTO loanApplicationDTO) {
@@ -92,6 +95,7 @@ public class LoanApplicationService {
         applyCalculatedValues(loanApplication, loanProduct);
 
         loanApplicationRepository.save(loanApplication);
+        log.info("User {} updated loan application {}", userId, id);
     }
 
     public void cancelLoanApplication(UUID applicationId, UUID userId) {
@@ -102,6 +106,7 @@ public class LoanApplicationService {
 
         loanApplication.setStatus(ApplicationStatus.CANCELLED);
         loanApplicationRepository.save(loanApplication);
+        log.info("User {} cancelled loan application {}", userId, applicationId);
     }
 
     public LoanApplicationViewDTO getApplicationDetails(UUID applicationId, UUID userId) {
@@ -139,6 +144,7 @@ public class LoanApplicationService {
         loanApplication.setStatus(ApplicationStatus.APPROVED);
         loanApplicationRepository.save(loanApplication);
         paymentClient.createLoanAccount(loanApplicationMapper.toLoanAccountRequest(loanApplication));
+        log.info("Loan application {} approved", id);
     }
 
     public void reject(UUID id) {
@@ -146,6 +152,7 @@ public class LoanApplicationService {
         validatePendingStatus(loanApplication);
         loanApplication.setStatus(ApplicationStatus.REJECTED);
         loanApplicationRepository.save(loanApplication);
+        log.info("Loan application {} rejected", id);
     }
 
     public LoanApplication getById(UUID id) {
@@ -170,6 +177,7 @@ public class LoanApplicationService {
 
     private void validateLoanProductIsActive(LoanProduct loanProduct) {
         if (!loanProduct.isActive()) {
+            log.warn("Attempt to use inactive loan product {}", loanProduct.getId());
             throw new InvalidLoanProductException("Loan product is inactive.");
         }
     }
@@ -183,6 +191,7 @@ public class LoanApplicationService {
 
     private void validateOwner(LoanApplication loanApplication, UUID userId) {
         if (!loanApplication.getUser().getId().equals(userId)) {
+            log.warn("Attempt to change ADMIN role for user {}", userId);
             throw new UnauthorizedActionException("You can update only your applications.");
         }
     }

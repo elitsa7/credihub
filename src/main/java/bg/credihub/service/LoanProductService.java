@@ -6,6 +6,7 @@ import bg.credihub.model.dtos.product.LoanProductDTO;
 import bg.credihub.model.dtos.product.LoanProductViewDTO;
 import bg.credihub.model.entities.LoanProduct;
 import bg.credihub.repository.LoanProductRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @Service
 public class LoanProductService {
     private final LoanProductRepository loanProductRepository;
@@ -28,10 +30,9 @@ public class LoanProductService {
 
     public void update(UUID id, LoanProductDTO loanProductDTO) {
         LoanProduct loanProduct = getById(id);
-
         modelMapper.map(loanProductDTO, loanProduct);
-
         loanProductRepository.save(loanProduct);
+        log.info("Loan product {} updated successfully.", id);
     }
 
     public List<LoanProduct> getAll() {

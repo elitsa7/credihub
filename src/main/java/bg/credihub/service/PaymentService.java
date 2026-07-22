@@ -4,11 +4,13 @@ import bg.credihub.client.PaymentClient;
 import bg.credihub.model.dtos.payment.CheckoutSessionResponse;
 import bg.credihub.model.dtos.payment.InstallmentResponse;
 import bg.credihub.model.dtos.payment.LoanAccountResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @Service
 public class PaymentService {
     private final PaymentClient paymentClient;
@@ -26,6 +28,8 @@ public class PaymentService {
     }
 
     public CheckoutSessionResponse createCheckoutSession(UUID installmentId) {
-        return paymentClient.createCheckoutSession(installmentId);
+        CheckoutSessionResponse response = paymentClient.createCheckoutSession(installmentId);
+        log.info("Created checkout session for installment {}", installmentId);
+        return response;
     }
 }
