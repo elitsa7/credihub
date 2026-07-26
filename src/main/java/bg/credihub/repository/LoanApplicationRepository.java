@@ -18,4 +18,6 @@ public interface LoanApplicationRepository extends JpaRepository<LoanApplication
     List<LoanApplication> findAllByUser(User user);
 
     List<LoanApplication> findAllByOrderByCreatedAtDesc();
+
+    long countByStatus(ApplicationStatus applicationStatus);
 }

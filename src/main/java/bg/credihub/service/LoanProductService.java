@@ -9,6 +9,9 @@ import bg.credihub.repository.LoanProductRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,6 +31,9 @@ public class LoanProductService {
         this.modelMapper = modelMapper;
     }
 
+    @Caching(evict = {
+            @CacheEvict(value = "loanProducts", allEntries = true),
+            @CacheEvict(value = "loanProduct", key = "#id")})
     public void update(UUID id, LoanProductDTO loanProductDTO) {
         LoanProduct loanProduct = getById(id);
         modelMapper.map(loanProductDTO, loanProduct);
@@ -35,12 +41,9 @@ public class LoanProductService {
         log.info("Loan product {} updated successfully.", id);
     }
 
-    public List<LoanProduct> getAll() {
-        return loanProductRepository.findAll();
-    }
-
+    @Cacheable("loanProducts")
     public List<LoanProductViewDTO> getAllView() {
-
+        log.info("Loading loan products from database...");
         return loanProductRepository.findAll()
                 .stream()
                 .map(loanProductMapper::toViewDto)
@@ -51,6 +54,7 @@ public class LoanProductService {
         return loanProductMapper.toEditDto(getById(id));
     }
 
+    @Cacheable(value = "loanProduct", key = "#id")
     public LoanProduct getById(UUID id) {
         return loanProductRepository.findById(id)
                 .orElseThrow(() -> new LoanProductNotFoundException("Loan product not found."));
