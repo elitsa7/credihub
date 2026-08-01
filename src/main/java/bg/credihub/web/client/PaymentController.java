@@ -1,6 +1,6 @@
 package bg.credihub.web.client;
 
-import bg.credihub.service.PaymentService;
+import bg.credihub.service.client.PaymentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 

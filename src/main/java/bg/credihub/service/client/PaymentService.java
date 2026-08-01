@@ -1,6 +1,5 @@
-package bg.credihub.service;
+package bg.credihub.service.client;
 
-import bg.credihub.client.PaymentClient;
 import bg.credihub.model.dtos.payment.CheckoutSessionResponse;
 import bg.credihub.model.dtos.payment.InstallmentResponse;
 import bg.credihub.model.dtos.payment.LoanAccountResponse;

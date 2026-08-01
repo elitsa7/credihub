@@ -1,6 +1,6 @@
 package bg.credihub.service;
 
-import bg.credihub.client.PaymentClient;
+import bg.credihub.service.client.PaymentClient;
 import bg.credihub.exception.InvalidLoanApplicationException;
 import bg.credihub.exception.InvalidLoanProductException;
 import bg.credihub.exception.LoanApplicationNotFoundException;

@@ -1,7 +1,7 @@
 package bg.credihub.web.client;
 
 import bg.credihub.security.CustomUserDetails;
-import bg.credihub.service.PaymentService;
+import bg.credihub.service.client.PaymentService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

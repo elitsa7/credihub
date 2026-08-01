@@ -1,4 +1,4 @@
-package bg.credihub.client;
+package bg.credihub.service.client;
 
 import bg.credihub.config.FeignConfig;
 import bg.credihub.model.dtos.payment.CheckoutSessionResponse;

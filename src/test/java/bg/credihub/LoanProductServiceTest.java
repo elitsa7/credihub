@@ -38,7 +38,10 @@ public class LoanProductServiceTest {
 
     @BeforeEach
     public void setUp() {
-        loanProductService = new LoanProductService(loanProductRepository, loanProductMapper, modelMapper);
+        loanProductService = new LoanProductService(
+                loanProductRepository,
+                loanProductMapper,
+                modelMapper);
     }
 
     @Test

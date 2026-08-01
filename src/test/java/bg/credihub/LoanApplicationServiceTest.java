@@ -1,6 +1,6 @@
 package bg.credihub;
 
-import bg.credihub.client.PaymentClient;
+import bg.credihub.service.client.PaymentClient;
 import bg.credihub.exception.InvalidLoanApplicationException;
 import bg.credihub.exception.InvalidLoanProductException;
 import bg.credihub.exception.LoanApplicationNotFoundException;
@@ -51,8 +51,12 @@ public class LoanApplicationServiceTest {
     void setUp() {
         loanApplicationMapper = new LoanApplicationMapper();
 
-        loanApplicationService = new LoanApplicationService(loanApplicationRepository, userService,
-                loanProductService, loanApplicationMapper, paymentClient);
+        loanApplicationService = new LoanApplicationService(
+                loanApplicationRepository,
+                userService,
+                loanProductService,
+                loanApplicationMapper,
+                paymentClient);
     }
 
     //Create
