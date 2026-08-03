@@ -283,7 +283,7 @@ public class UserServiceTest {
     }
 
     @Test
-    void shouldThrowExceptionWhenIdentificationNumberIsShorterThanFourDigits(){
+    void shouldThrowExceptionWhenIdentificationNumberIsShorterThanFourDigits() {
         User user = createUser();
         user.setIdentificationNumber("123");
         UserProfileDTO userProfileDTO = createUserProfileDTO();
@@ -323,7 +323,7 @@ public class UserServiceTest {
     }
 
     @Test
-    void shouldReturnAllUsersWithoutAdmin(){
+    void shouldReturnAllUsersWithoutAdmin() {
         User admin = createUser();
         admin.setRole(Role.ADMIN);
 
@@ -332,7 +332,7 @@ public class UserServiceTest {
 
         UserAdminViewDTO userAdminViewDTO = new UserAdminViewDTO();
 
-        when(userRepository.findAll()).thenReturn(List.of(admin,user));
+        when(userRepository.findAll()).thenReturn(List.of(admin, user));
         when(userMapper.toAdminViewDto(user)).thenReturn(userAdminViewDTO);
 
         List<UserAdminViewDTO> result = userService.getAllWithoutAdminView();
