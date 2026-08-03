@@ -80,7 +80,7 @@ public class PaymentServiceTest {
         List<LoanAccountResponse> result = paymentService.getUserLoans(userId);
 
         assertTrue(result.isEmpty());
-        verify(paymentClient).getLoanInstallments(userId);
+        verify(paymentClient).getUserLoans(userId);
     }
 
     @Test
