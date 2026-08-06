@@ -7,19 +7,14 @@
 
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 
-<main class="flex-grow-1 py-5">
+<main class="profile-section flex-grow-1">
     <div class="container mt-5">
-
         <div class="row justify-content-center">
-            <div class="col-lg-6">
-
-                <div class="card shadow border-0">
+            <div class="col-lg-5">
+                <div class="card profile-card">
                     <div class="card-body p-4">
-
-                        <h2 class="text-center mb-4">My Profile</h2>
-
+                        <h2 class="profile-title">My Profile</h2>
                         <hr>
-
                         <div class="mb-3">
                             <label class="form-label fw-bold">Name</label>
                             <p class="mb-0">
@@ -48,11 +43,10 @@
                             <p th:text="${profile.role}"></p>
                         </div>
 
-                        <div class="text-center mt-4">
+                        <div class="profile-actions d-flex justify-content-center gap-3 mt-4">
                             <a th:href="@{/profile/edit}" class="btn btn-primary">Edit Profile</a>
                             <a th:href="@{/applications}" class="btn btn-outline-primary">My Applications</a>
                         </div>
-
                     </div>
                 </div>
             </div>
