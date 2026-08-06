@@ -1,0 +1,160 @@
+.applications-section {
+    min-height: calc(100vh - 140px);
+    padding: 60px 20px;
+}
+
+.applications-title {
+    color: white;
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 40px;
+}
+
+.applications-card {
+    background: rgba(28, 35, 58, .72);
+    backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, .08);
+    border-radius: 28px;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, .45);
+}
+
+.applications-card .card-body {
+    padding: 40px;
+}
+
+.applications-table thead th {
+    color: #7cb7ff;
+    border-bottom: 1px solid rgba(255, 255, 255, .08);
+    font-weight: 600;
+}
+
+.applications-table td {
+    vertical-align: middle;
+    border-color: rgba(255, 255, 255, .06);
+    color: white;
+}
+
+.applications-table tbody tr:hover {
+    background: rgba(255, 255, 255, .03);
+}
+
+.badge {
+    padding: 8px 14px;
+    font-size: .8rem;
+    border-radius: 12px;
+}
+
+.applications-empty {
+    background: rgba(28, 35, 58, .72);
+    backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, .08);
+    border-radius: 28px;
+    color: white;
+}
+
+.applications-empty h5 {
+    color: white;
+}
+
+.applications-empty p {
+    color: #cbd5e1 !important;
+}
+
+.applications-actions .btn {
+    min-width: 110px;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+.applications-table {
+    margin: 0;
+    color: white;
+    background: transparent !important;
+}
+
+.applications-table thead,
+.applications-table tbody,
+.applications-table tr,
+.applications-table td,
+.applications-table th {
+    background: transparent !important;
+}
+
+.details-table{
+    margin:0;
+    color:white;
+    background:transparent !important;
+}
+
+.details-table,
+.details-table tbody,
+.details-table tr,
+.details-table th,
+.details-table td{
+    background:transparent !important;
+}
+
+.details-table th{
+    color:#7cb7ff;
+    width:35%;
+    border-color:rgba(255,255,255,.08);
+    font-weight:600;
+}
+
+.details-table td{
+    color:white;
+    border-color:rgba(255,255,255,.08);
+}
+
+.details-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.details-actions .btn {
+    min-width: 180px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 14px;
+    font-weight: 600;
+}
+
+@media (max-width: 576px) {
+
+    .applications-section {
+        padding: 30px 15px;
+    }
+
+    .applications-title {
+        font-size: 2rem;
+        margin-bottom: 30px;
+    }
+
+    .applications-card {
+        border-radius: 22px;
+    }
+
+    .applications-card .card-body {
+        padding: 24px;
+    }
+
+    .applications-table {
+        font-size: .9rem;
+    }
+
+    .details-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .details-actions .btn {
+        width: 100%;
+        max-width: 260px;
+    }
+}
