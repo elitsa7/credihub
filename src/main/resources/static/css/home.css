@@ -167,3 +167,66 @@
 .features-section {
     border-top: 1px solid rgba(255, 255, 255, .08);
 }
+
+@media (max-width: 576px) {
+
+    .hero-section {
+        padding: 40px 0;
+    }
+
+    .hero-content {
+        text-align: left;
+        margin-bottom: 35px;
+    }
+
+    .hero-title {
+        font-size: 42px;
+        line-height: 1.15;
+    }
+
+    .hero-text {
+        font-size: 1rem;
+        margin-bottom: 25px;
+    }
+
+    .hero-badge {
+        font-size: .75rem;
+    }
+
+    .hero-buttons {
+        justify-content: flex-start;
+    }
+
+    .hero-calculator .card {
+        border-radius: 22px;
+    }
+
+    .hero-calculator .card-body {
+        padding: 24px;
+    }
+
+    .features-section {
+        padding: 70px 0;
+    }
+
+    .features-title {
+        font-size: 34px;
+    }
+
+    .features-subtitle {
+        font-size: 16px;
+        margin-bottom: 40px;
+    }
+
+    .feature-card {
+        padding: 30px 22px;
+    }
+
+    .feature-card h4 {
+        font-size: 24px;
+    }
+
+    .feature-card p {
+        font-size: 16px;
+    }
+}
