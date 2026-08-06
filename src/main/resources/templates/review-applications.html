@@ -49,7 +49,7 @@
                         <span class="badge bg-secondary"
                               th:if="${loanApplication.status.name() == 'CANCELLED'}">Cancelled</span>
                     </td>
-                    <td th:text="${#temporals.format(loanApplication.createdAt, 'dd.MM.yyyy HH:mm')}"></td>
+                    <td th:text="${#temporals.format(loanApplication.createdAt, 'dd.MM.yyyy HH:mm', T(java.util.Locale).ENGLISH)}"></td>
                     <td>
                         <div th:if="${loanApplication.status.name() == 'PENDING'}" class="d-flex gap-2">
                             <form th:action="@{/admin/applications/{id}/approve(id=${loanApplication.id})}"

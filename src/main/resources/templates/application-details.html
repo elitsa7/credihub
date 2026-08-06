@@ -65,7 +65,7 @@
                         </tr>
                         <tr>
                             <th>Created At</th>
-                            <td th:text="${#temporals.format(loanApplication.createdAt, 'dd.MM.yyyy HH:mm')}"></td>
+                            <td th:text="${#temporals.format(loanApplication.createdAt, 'dd.MM.yyyy HH:mm', T(java.util.Locale).ENGLISH)}"></td>
                         </tr>
 
                         </tbody>

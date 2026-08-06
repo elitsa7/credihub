@@ -40,11 +40,11 @@
                     </p>
                     <p>
                         <strong>Start Date:</strong>
-                        <span th:text="${#temporals.format(loan.startDate,'dd MMM yyyy')}"></span>
+                        <span th:text="${#temporals.format(loan.startDate,'dd MMM yyyy', T(java.util.Locale).ENGLISH)}"></span>
                     </p>
                     <p>
                         <strong>End Date:</strong>
-                        <span th:text="${#temporals.format(loan.endDate,'dd MMM yyyy')}"></span>
+                        <span th:text="${#temporals.format(loan.endDate,'dd MMM yyyy', T(java.util.Locale).ENGLISH)}"></span>
                     </p>
                     <p>
                     <span class="badge rounded-pill"
