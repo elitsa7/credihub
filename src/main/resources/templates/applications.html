@@ -11,7 +11,7 @@
     <div class="container">
         <h2 class="applications-title">My Applications</h2>
 
-        <div th:if="${applications.isEmpty()}"
+        <div th:if="${#lists.isEmpty(applications)}"
              class="card applications-empty">
             <div class="card-body text-center py-5">
                 <h5 class="mb-3">No Applications Found</h5>
@@ -20,9 +20,9 @@
             </div>
         </div>
 
-        <div class="card applications-card">
+        <div th:unless="${applications.isEmpty()}" class="card applications-card">
             <div class="card-body">
-                <table th:unless="${applications.isEmpty()}"
+                <table>
                        class="table applications-table text-center align-middle">
                     <thead>
                     <tr>

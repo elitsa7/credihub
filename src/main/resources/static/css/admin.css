@@ -1,0 +1,156 @@
+.admin-section {
+    min-height: calc(100vh - 140px);
+    padding: 60px 20px;
+}
+
+.admin-title {
+    color: white;
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 40px;
+}
+
+.admin-card {
+    background: rgba(28, 35, 58, .72);
+    backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, .08);
+    border-radius: 28px;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, .45);
+}
+
+.admin-card .card-body {
+    padding: 40px;
+}
+
+.admin-table {
+    margin: 0;
+    color: white;
+    background: transparent !important;
+}
+
+.admin-table,
+.admin-table thead,
+.admin-table tbody,
+.admin-table tr,
+.admin-table td,
+.admin-table th {
+    background: transparent !important;
+}
+
+.admin-table th {
+    color: #7cb7ff;
+    border-color: rgba(255, 255, 255, .08);
+    font-weight: 600;
+}
+
+.admin-table td {
+    color: white;
+    border-color: rgba(255, 255, 255, .06);
+    vertical-align: middle;
+}
+
+.admin-table tbody tr:hover {
+    background: rgba(255, 255, 255, .03) !important;
+}
+
+.admin-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.admin-actions .btn {
+    min-width: 120px;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+.admin-form {
+    max-width: 700px;
+    margin: auto;
+}
+
+.admin-form label {
+    color: #7cb7ff;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.admin-form .form-control,
+.admin-form textarea {
+    background: rgba(255, 255, 255, .08);
+    border: 1px solid rgba(255, 255, 255, .12);
+    color: white;
+    border-radius: 14px;
+}
+
+.admin-form textarea {
+    min-height: 120px;
+}
+
+.admin-form .form-control:focus,
+.admin-form textarea:focus {
+    background: rgba(255, 255, 255, .1);
+    color: white;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 .2rem rgba(59, 130, 246, .25);
+}
+
+.admin-form .form-check-label {
+    color: white;
+}
+
+.admin-form .btn {
+    height: 50px;
+    border-radius: 14px;
+    font-weight: 600;
+}
+
+.form-check-input {
+    background: rgba(255, 255, 255, .08);
+    border-color: rgba(255, 255, 255, .15);
+}
+
+.form-check-input:checked {
+    background: #2563eb;
+    border-color: #2563eb;
+}
+
+.admin-form textarea {
+    resize: none;
+}
+
+@media (max-width: 576px) {
+
+    .admin-section {
+        padding: 30px 15px;
+    }
+
+    .admin-title {
+        font-size: 2rem;
+    }
+
+    .admin-card {
+        border-radius: 22px;
+    }
+
+    .admin-card .card-body {
+        padding: 24px;
+    }
+
+    .admin-table {
+        font-size: .9rem;
+    }
+
+    .admin-actions {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .admin-actions .btn {
+        width: 100%;
+        max-width: 240px;
+    }
+}
