@@ -82,28 +82,6 @@ body {
 }
 
 .footer {
-
-    background: #070d1d;
-
-    border-top: 1px solid rgba(255, 255, 255, .08);
-
-    padding: 45px 0 30px;
-
-    text-align: center;
-}
-
-.footer-logo {
-
-    font-size: 34px;
-
-    font-weight: 800;
-
-    color: white;
-
-    margin-bottom: 12px;
-}
-
-.footer {
     background-color: #0f172a;
     backdrop-filter: blur(10px);
     border-top: 1px solid rgba(255, 255, 255, .08);

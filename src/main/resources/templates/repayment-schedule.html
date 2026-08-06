@@ -3,48 +3,51 @@
 <head th:replace="~{fragments/head :: head('Repayment')}"></head>
 <body class="bg-light d-flex flex-column min-vh-100">
 <nav th:replace="~{fragments/navbar :: navbar}"></nav>
-<div class="container py-5">
-    <h2 class="mb-4 text-center">Repayment Schedule</h2>
-    <div class="card shadow">
-        <div class="card-body">
-            <table class="table table-hover align-middle">
+<main class="loans-section">
+    <div class="container">
+        <h2 class="loans-title">Repayment Schedule</h2>
+        <div class="card schedule-card">
+            <div class="card-body">
+                <table class="table schedule-table align-middle">
 
-                <thead class="table-light">
-                <tr>
-                    <th>#</th>
-                    <th>Due Date</th>
-                    <th>Amount</th>
-                    <th>Status</th>
-                    <th class="text-center">Action</th>
-                </tr>
-                </thead>
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Due Date</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                    </thead>
 
-                <tbody>
-                <tr th:each="installment : ${installments}">
-                    <td th:text="${installment.installmentNumber}"></td>
-                    <td th:text="${installment.dueDate}"></td>
-                    <td th:text="${installment.amount + ' EUR'}"></td>
-                    <td>
+                    <tbody>
+                    <tr th:each="installment : ${installments}">
+                        <td th:text="${installment.installmentNumber}"></td>
+                        <td th:text="${installment.dueDate}"></td>
+                        <td th:text="${installment.amount + ' EUR'}"></td>
+                        <td>
                         <span class="badge rounded-pill"
                               th:classappend="${installment.status == 'PAID'} ? 'bg-success' : 'bg-warning text-dark'"
                               th:text="${installment.status}"></span>
-                    </td>
-                    <td class="text-center">
-                        <form th:if="${installment.payable}"
-                              th:action="@{/installments/{installmentId}/pay(installmentId=${installment.id})}"
-                              method="post">
-                            <button type="submit" class="btn btn-primary">Pay</button>
-                        </form>
+                        </td>
+                        <td class="text-center">
+                            <form th:if="${installment.payable}"
+                                  th:action="@{/installments/{installmentId}/pay(installmentId=${installment.id})}"
+                                  method="post">
+                                <button type="submit" class="btn btn-primary">Pay</button>
+                            </form>
 
-                        <button th:unless="${installment.payable}" class="btn btn-secondary" disabled>Unavailable</button>
+                            <button th:unless="${installment.payable}" class="btn btn-secondary" disabled>Unavailable
+                            </button>
 
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
+</main>
 <div th:replace="~{fragments/footer :: footer}"></div>
 </body>
 </html>

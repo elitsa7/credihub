@@ -1,0 +1,135 @@
+.loans-section {
+    min-height: calc(100vh - 140px);
+    padding: 60px 20px;
+}
+
+.loans-title {
+    color: white;
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 40px;
+}
+
+.loans-empty {
+    background: rgba(28, 35, 58, .72);
+    backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, .08);
+    border-radius: 28px;
+    color: white;
+}
+
+.loans-empty h5 {
+    color: white;
+}
+
+.loans-empty p {
+    color: #cbd5e1 !important;
+}
+
+.loan-card {
+    background: rgba(28, 35, 58, .72);
+    backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, .08);
+    border-radius: 28px;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, .45);
+    color: white;
+}
+
+.loan-card .card-body {
+    padding: 35px;
+}
+
+.loan-card h5 {
+    color: white;
+    font-size: 1.6rem;
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 700;
+}
+
+.loan-card strong {
+    color: #7cb7ff;
+}
+
+.loan-card p {
+    color: white;
+    margin-bottom: 18px;
+}
+
+.loan-card .btn {
+    margin-top: 20px;
+    height: 50px;
+    border-radius: 14px;
+    font-weight: 600;
+}
+
+.schedule-card {
+    background: rgba(28, 35, 58, .72);
+    backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, .08);
+    border-radius: 28px;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, .45);
+}
+
+.schedule-card .card-body {
+    padding: 35px;
+}
+
+.schedule-table {
+    margin: 0;
+    color: white;
+    background: transparent !important;
+}
+
+.schedule-table,
+.schedule-table thead,
+.schedule-table tbody,
+.schedule-table tr,
+.schedule-table td,
+.schedule-table th {
+    background: transparent !important;
+}
+
+.schedule-table th {
+    color: #7cb7ff;
+    border-color: rgba(255, 255, 255, .08);
+}
+
+.schedule-table td {
+    color: white;
+    border-color: rgba(255, 255, 255, .06);
+}
+
+.schedule-table tbody tr:hover {
+    background: rgba(255, 255, 255, .03) !important;
+}
+
+.schedule-table .btn {
+    min-width: 120px;
+}
+
+@media (max-width: 576px) {
+
+    .loans-section {
+        padding: 30px 15px;
+    }
+
+    .loans-title {
+        font-size: 2rem;
+    }
+
+    .loan-card,
+    .schedule-card {
+        border-radius: 22px;
+    }
+
+    .loan-card .card-body,
+    .schedule-card .card-body {
+        padding: 24px;
+    }
+
+    .schedule-table {
+        font-size: .9rem;
+    }
+}

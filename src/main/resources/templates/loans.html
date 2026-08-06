@@ -3,63 +3,65 @@
 <head th:replace="~{fragments/head :: head('Loans')}"></head>
 <body class="bg-light d-flex flex-column min-vh-100">
 <nav th:replace="~{fragments/navbar::navbar}"></nav>
-<div class="container mt-5">
-    <h2 class="text-center mb-5">My Loans</h2>
-    <div th:if="${#lists.isEmpty(loans)}"
-         class="card shadow-sm border-0">
-        <div class="card-body text-center py-5">
-            <h5 class="mb-3">No Active Loans Found</h5>
-            <p class="text-muted mb-4">You don't have any active loans. Apply today and get started.</p>
-            <a th:href="@{/applications/create}"  class="btn btn-primary px-5">Apply Now</a>
+<main class="loans-section">
+    <div class="container">
+        <h2 class="loans-title">My Loans</h2>
+        <div th:if="${#lists.isEmpty(loans)}"
+             class="card loans-empty">
+            <div class="card-body text-center py-5">
+                <h5 class="mb-3">No Active Loans Found</h5>
+                <p class="text-muted mb-4">You don't have any active loans. Apply today and get started.</p>
+                <a th:href="@{/applications/create}" class="btn btn-primary px-5">Apply Now</a>
+            </div>
         </div>
-    </div>
-    <div class="row justify-content-center">
-        <div class="col-lg-7 col-xl-6 mb-4"
-             th:each="loan : ${loans}">
-            <div class="card shadow h-100">
-                <div class="card-body">
-                    <h5 class="card-title text-center">Loan Details</h5>
-                    <p>
-                        <strong>Loan amount:</strong>
-                        <span th:text="${loan.principalAmount}"></span> EUR
-                    </p>
-                    <p>
-                        <strong>Outstanding Balance</strong>
-                        <span th:text="${loan.remainingBalance}"></span> EUR
-                    </p>
-                    <p>
-                        <strong>Monthly Payment:</strong>
-                        <span th:text="${loan.monthlyPayment}"></span> EUR
-                    </p>
-                    <p>
-                        <strong>Repayment Progress</strong>
-                        <span th:text="${loan.paidInstallments}"></span>
-                        <span>/</span>
-                        <span th:text="${loan.periodMonths}"></span>
-                        <span>installments</span>
-                    </p>
-                    <p>
-                        <strong>Start Date:</strong>
-                        <span th:text="${#temporals.format(loan.startDate,'dd MMM yyyy', T(java.util.Locale).ENGLISH)}"></span>
-                    </p>
-                    <p>
-                        <strong>End Date:</strong>
-                        <span th:text="${#temporals.format(loan.endDate,'dd MMM yyyy', T(java.util.Locale).ENGLISH)}"></span>
-                    </p>
-                    <p>
+        <div class="row justify-content-center">
+            <div class="col-lg-7 col-xl-6 mb-4"
+                 th:each="loan : ${loans}">
+                <div class="card loan-card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Loan Details</h5>
+                        <p>
+                            <strong>Loan amount:</strong>
+                            <span th:text="${loan.principalAmount}"></span> EUR
+                        </p>
+                        <p>
+                            <strong>Outstanding Balance</strong>
+                            <span th:text="${loan.remainingBalance}"></span> EUR
+                        </p>
+                        <p>
+                            <strong>Monthly Payment:</strong>
+                            <span th:text="${loan.monthlyPayment}"></span> EUR
+                        </p>
+                        <p>
+                            <strong>Repayment Progress</strong>
+                            <span th:text="${loan.paidInstallments}"></span>
+                            <span>/</span>
+                            <span th:text="${loan.periodMonths}"></span>
+                            <span>installments</span>
+                        </p>
+                        <p>
+                            <strong>Start Date:</strong>
+                            <span th:text="${#temporals.format(loan.startDate,'dd MMM yyyy', T(java.util.Locale).ENGLISH)}"></span>
+                        </p>
+                        <p>
+                            <strong>End Date:</strong>
+                            <span th:text="${#temporals.format(loan.endDate,'dd MMM yyyy', T(java.util.Locale).ENGLISH)}"></span>
+                        </p>
+                        <p>
                     <span class="badge rounded-pill"
                           th:classappend="${loan.status == 'ACTIVE'} ? 'bg-success' : 'bg-secondary'"
                           th:text="${loan.status}"></span>
-                    </p>
+                        </p>
 
-                    <a class="btn btn-outline-primary w-100"
-                       th:href="@{/loans/{id}/installments(id=${loan.id})}">Repayment Schedule
-                    </a>
+                        <a class="btn btn-outline-primary w-100"
+                           th:href="@{/loans/{id}/installments(id=${loan.id})}">Repayment Schedule
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</main>
 <div th:replace="~{fragments/footer :: footer}"></div>
 </body>
 </html>
