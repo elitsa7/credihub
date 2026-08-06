@@ -1,10 +1,17 @@
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: #f8fafc;
+    min-height: 100vh;
+    background: radial-gradient(circle at top right, #1e3a8a 0%, transparent 35%),
+    radial-gradient(circle at bottom left, #2563eb55 0%, transparent 30%),
+    linear-gradient(135deg, #050816, #0b1227, #101935);
+    background-attachment: fixed;
+    color: white;
 }
+
 
 .navbar {
     background-color: #0f172a !important;
+    backdrop-filter: blur(10px);
 }
 
 .navbar-brand {
@@ -74,7 +81,39 @@ body {
     box-shadow: 0 0 0 0.15rem rgba(37, 99, 235, 0.2);
 }
 
-footer {
-    background-color: #0f172a;
+.footer {
+
+    background: #070d1d;
+
+    border-top: 1px solid rgba(255, 255, 255, .08);
+
+    padding: 45px 0 30px;
+
+    text-align: center;
+}
+
+.footer-logo {
+
+    font-size: 34px;
+
+    font-weight: 800;
+
     color: white;
+
+    margin-bottom: 12px;
+}
+
+.footer {
+    background-color: #0f172a;
+    backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255, 255, 255, .08);
+    padding: 22px 0;
+    text-align: center;
+}
+
+.footer p {
+    margin: 0;
+    color: rgba(255, 255, 255, .75);
+    font-size: 15px;
+    font-weight: 500;
 }

@@ -1,0 +1,189 @@
+.hero-section {
+    position: relative;
+    overflow: hidden;
+    min-height: 92vh;
+}
+
+.hero-content {
+    padding-right: 70px;
+    color: white;
+    z-index: 2;
+}
+
+.hero-badge {
+    display: inline-block;
+    padding: 8px 18px;
+    border-radius: 30px;
+    background: rgba(255, 255, 255, .08);
+    color: #60a5fa;
+    letter-spacing: 2px;
+    font-size: .8rem;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, .1);
+}
+
+.hero-title {
+    font-size: 76px;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 25px;
+}
+
+.hero-title span {
+    color: #60a5fa;
+}
+
+.hero-text {
+    color: #cbd5e1;
+    font-size: 1.15rem;
+    max-width: 520px;
+    line-height: 1.8;
+    margin-bottom: 35px;
+}
+
+.hero-calculator .card {
+    border-radius: 28px;
+    background: rgba(28, 35, 58, .72);
+    backdrop-filter: blur(30px);
+    border: 1px solid rgba(255, 255, 255, .08);
+    box-shadow: 0 25px 70px rgba(0, 0, 0, .45);
+}
+
+.hero-calculator h3 {
+    color: white;
+}
+
+.hero-calculator label {
+    color: #dbeafe;
+}
+
+.hero-calculator .form-control,
+.hero-calculator .form-select {
+    height: 54px;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, .08);
+    color: white;
+}
+
+.hero-calculator .form-control::placeholder {
+    color: #94a3b8;
+}
+
+.hero-calculator .form-select {
+    color: white;
+}
+
+.hero-calculator hr {
+    border-color: rgba(255, 255, 255, .15);
+}
+
+.hero-calculator strong,
+.hero-calculator span {
+    color: white;
+}
+
+.glow {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(120px);
+}
+
+.glow1 {
+    width: 350px;
+    height: 350px;
+    background: #2563eb;
+    top: -120px;
+    right: -100px;
+    opacity: .35;
+}
+
+.glow2 {
+    width: 280px;
+    height: 280px;
+    background: #1d4ed8;
+    bottom: -120px;
+    left: -120px;
+    opacity: .25;
+}
+
+.hero-calculator .form-select option {
+    background: #1b2338;
+    color: #ffffff;
+}
+
+.features-section {
+    padding: 110px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.features-title {
+    color: white;
+    text-align: center;
+    font-size: 52px;
+    font-weight: 800;
+    margin-bottom: 20px;
+}
+
+.features-subtitle {
+    color: #94a3b8;
+    text-align: center;
+    margin-bottom: 70px;
+    font-size: 18px;
+}
+
+.feature-card {
+    background: rgba(255, 255, 255, .05);
+
+    backdrop-filter: blur(18px);
+
+    border: 1px solid rgba(255, 255, 255, .08);
+
+    border-radius: 26px;
+
+    padding: 45px 30px;
+
+    transition: .35s;
+
+    text-align: center;
+
+    color: white;
+
+    height: 100%;
+
+    box-shadow: 0 20px 50px rgba(0, 0, 0, .35);
+}
+
+.feature-card:hover {
+
+    transform: translateY(-10px);
+
+    border-color: #3b82f6;
+
+    box-shadow: 0 25px 70px rgba(37, 99, 235, .30);
+}
+
+.feature-card h4 {
+
+    color: white;
+
+    font-size: 30px;
+
+    font-weight: 700;
+
+    margin-bottom: 15px;
+}
+
+.feature-card p {
+
+    color: #cbd5e1;
+
+    font-size: 17px;
+
+    line-height: 1.7;
+}
+
+.features-section {
+
+    border-top: 1px solid rgba(255, 255, 255, .08);
+}

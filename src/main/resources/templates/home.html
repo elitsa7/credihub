@@ -5,117 +5,116 @@
 
 <body class="bg-light d-flex flex-column min-vh-100">
 <div th:replace="~{fragments/navbar :: navbar}"></div>
-<div class="container py-5">
-    <div class="row align-items-center">
-        <div class="col-lg-6">
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center min-vh-100">
 
-            <h1 class="display-4 fw-bold">Fast Online Loans</h1>
+            <div class="col-lg-6 hero-content">
+                <span class="hero-badge">FAST • SECURE • DIGITAL</span>
+                <h1 class="hero-title">Fast Online<span>Loans.</span></h1>
+                <p class="hero-text">Apply for a personal or business loan in just a few minutes.
+                    Enjoy transparent conditions, fast approval and flexible repayment plans —
+                    all from the comfort of your home.</p>
+                <div class="hero-buttons">
+                    <a th:href="@{/applications/create}" class="btn btn-primary btn-lg px-4">Apply Now</a>
+                </div>
+            </div>
 
-            <p class="lead mt-3">Apply for a loan in minutes and receive a quick decision.
-                Transparent conditions and flexible repayment plans.</p>
+            <div class="col-lg-6 hero-calculator">
+                <div class="card shadow-lg border-0">
+                    <div class="card-body p-4">
+                        <h3 class="text-center mb-4">Loan Calculator</h3>
+                        <form th:object="${loanCalculatorDTO}" th:action="@{/calculate}" method="post">
+                            <div class="mb-3">
+                                <label class="form-label">Loan product</label>
+                                <select class="form-select" th:field="*{loanProductId}">
+                                    <option value="">Select product</option>
+                                    <option th:each="product : ${loanProducts}" th:value="${product.id}"
+                                            th:text="${product.name}"></option>
+                                </select>
+                                <small class="text-danger" th:if="${#fields.hasErrors('loanProductId')}"
+                                       th:errors="*{loanProductId}">
+                                </small>
+                            </div>
 
-            <a th:href="@{/applications/create}" class="btn btn-primary btn-lg mt-3">Apply Now</a>
-        </div>
+                            <div class="mb-3">
+                                <label class="form-label">Amount (EUR)</label>
+                                <input type="number" class="form-control" th:field="*{requestedAmount}">
+                                <small class="text-danger" th:if="${#fields.hasErrors('requestedAmount')}"
+                                       th:errors="*{requestedAmount}">
+                                </small>
+                            </div>
 
-        <div class="col-lg-6">
-            <div class="card shadow-lg border-0">
-                <div class="card-body p-4">
-                    <h3 class="text-center mb-4">Loan Calculator</h3>
+                            <div class="mb-3">
+                                <label class="form-label">Period (Months)</label>
+                                <input type="number" class="form-control" th:field="*{periodMonths}">
+                                <small class="text-danger" th:if="${#fields.hasErrors('periodMonths')}"
+                                       th:errors="*{periodMonths}">
+                                </small>
+                            </div>
 
-                    <form th:object="${loanCalculatorDTO}" th:action="@{/calculate}" method="post">
-                        <div class="mb-3">
-                            <label class="form-label">Loan product</label>
-                            <select class="form-select" th:field="*{loanProductId}">
-                                <option value="">Select product</option>
-                                <option th:each="product : ${loanProducts}" th:value="${product.id}"
-                                        th:text="${product.name}"></option>
-                            </select>
-                            <small class="text-danger" th:if="${#fields.hasErrors('loanProductId')}"
-                                   th:errors="*{loanProductId}">
-                            </small>
+                            <div class="d-grid mt-4">
+                                <button type=submit class="btn btn-primary">Calculate</button>
+                            </div>
+
+                        </form>
+
+                        <div th:if="${result != null}">
+                            <hr>
+
+                            <div class="d-flex justify-content-between">
+                                <strong>Interest Rate:</strong>
+                                <span th:text="${result.interestRate}"></span>
+                            </div>
+
+                            <div class="d-flex justify-content-between mt-2">
+                                <strong>Monthly Payment:</strong>
+                                <span th:text="${result.monthlyPayment}"></span>
+                            </div>
+
+                            <div class="d-flex justify-content-between mt-2">
+                                <strong>Total Repayment:</strong>
+                                <span th:text="${result.totalRepaymentAmount}"></span>
+                            </div>
                         </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Amount (EUR)</label>
-                            <input type="number" class="form-control" th:field="*{requestedAmount}">
-                            <small class="text-danger" th:if="${#fields.hasErrors('requestedAmount')}"
-                                   th:errors="*{requestedAmount}">
-                            </small>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Period (Months)</label>
-                            <input type="number" class="form-control" th:field="*{periodMonths}">
-                            <small class="text-danger" th:if="${#fields.hasErrors('periodMonths')}"
-                                   th:errors="*{periodMonths}">
-                            </small>
-                        </div>
-
-                        <div class="d-grid mt-4">
-                            <button type=submit class="btn btn-primary">Calculate</button>
-                        </div>
-
-                    </form>
-
-                    <div th:if="${result != null}">
-                        <hr>
-
-                        <div class="d-flex justify-content-between">
-                            <strong>Interest Rate:</strong>
-                            <span th:text="${result.interestRate}"></span>
-                        </div>
-
-                        <div class="d-flex justify-content-between mt-2">
-                            <strong>Monthly Payment:</strong>
-                            <span th:text="${result.monthlyPayment}"></span>
-                        </div>
-
-                        <div class="d-flex justify-content-between mt-2">
-                            <strong>Total Repayment:</strong>
-                            <span th:text="${result.totalRepaymentAmount}"></span>
-                        </div>
+                        <p class="text-danger text-center mt-3" th:if="${calculateError}" th:text="${calculateError}">
+                        </p>
                     </div>
-
-                    <p class="text-danger text-center mt-3" th:if="${calculateError}" th:text="${calculateError}">
-                    </p>
                 </div>
             </div>
         </div>
     </div>
-</div>
+    <div class="glow glow1"></div>
+    <div class="glow glow2"></div>
+</section>
 
-<section class="container pb-5">
+<section class="features-section">
+    <div class="container">
+        <h2 class="features-title">Why Choose CrediHub?</h2>
+        <p class="features-subtitle">Simple, transparent and built around you.</p>
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div class="feature-card">
+                    <h4>Fast Approval</h4>
+                    <p>Receive your decision within minutes.</p>
+                </div>
+            </div>
 
-    <h2 class="text-center mb-4">Why Choose CrediHub?</h2>
+            <div class="col-lg-4">
+                <div class="feature-card">
+                    <h4>Flexible Loans</h4>
+                    <p>Personal and business financing.</p>
+                </div>
+            </div>
 
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card shadow border-0">
-                <div class="card-body text-center">
-                    <h5>Fast Approval</h5>
-                    <p>Get a decision within minutes.</p>
+            <div class="col-lg-4">
+                <div class="feature-card">
+                    <h4>Secure Process</h4>
+                    <p>Your personal data stays protected.</p>
                 </div>
             </div>
         </div>
-
-        <div class="col-md-4">
-            <div class="card shadow border-0">
-                <div class="card-body text-center">
-                    <h5>Flexible Terms</h5>
-                    <p>Choose the repayment period that suits you.</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card shadow border-0">
-                <div class="card-body text-center">
-                    <h5>Secure Process</h5>
-                    <p>Your information is protected and secure.</p>
-                </div>
-            </div>
-        </div>
-
     </div>
 
 </section>

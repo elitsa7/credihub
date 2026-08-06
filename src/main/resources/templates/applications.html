@@ -45,7 +45,7 @@
                 <span class="badge bg-secondary"
                       th:if="${loanApplication.status.name() == 'CANCELLED'}">Cancelled</span>
             </td>
-            <td th:text="${#temporals.format(loanApplication.createdAt, 'dd MMM yyyy HH:mm',, T(java.util.Locale).ENGLISH)}"></td>
+            <td th:text="${#temporals.format(loanApplication.createdAt, 'dd MMM yyyy HH:mm', T(java.util.Locale).ENGLISH)}"></td>
             <td class="text-center">
                 <a th:href="@{/applications/{id}(id=${loanApplication.id})}" class="btn btn-primary">View</a>
             </td>
