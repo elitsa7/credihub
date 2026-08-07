@@ -3,14 +3,15 @@
 <head th:replace="~{fragments/head :: head('404 - Not Found')}"></head>
 <body class="bg-light d-flex flex-column min-vh-100">
 <div th:replace="~{fragments/navbar :: navbar}"></div>
-<div class="container text-center mt-5">
-    <h1 class="display-1 text-primary">404</h1>
-    <h2>Resource Not Found</h2>
-    <p class="lead">The requested resource could not be found.</p>
-    <p class="text-danger" th:text="${message}"></p>
-    <a th:href="@{/}" class="btn btn-primary mt-3">Back to Home
-    </a>
-</div>
+<main class="flex-grow-1 d-flex align-items-center justify-content-center">
+    <div class="container text-center">
+        <h1 class="display-1 text-danger">404</h1>
+        <h2>Resource Not Found</h2>
+        <p class="lead">The requested resource could not be found.</p>
+        <p class="text-danger" th:text="${message}"></p>
+        <a th:href="@{/}" class="btn btn-primary mt-3">Back to Home</a>
+    </div>
+</main>
 <div th:replace="~{fragments/footer :: footer}"></div>
 </body>
 </html>

@@ -14,85 +14,86 @@
                 <div class="card applications-card">
                     <div class="card-body p-4">
                         <h2 class="applications-title mb-4">Application Details</h2>
-                        <table class="table details-table">
-                            <tbody>
-                            <tr>
-                                <th>Loan Product</th>
-                                <td th:text="${loanApplication.loanProductName}"></td>
-                            </tr>
+                        <div class="table-responsive">
+                            <table class="table details-table">
+                                <tbody>
+                                <tr>
+                                    <th>Loan Product</th>
+                                    <td th:text="${loanApplication.loanProductName}"></td>
+                                </tr>
 
-                            <tr>
-                                <th>Status</th>
-                                <td>
+                                <tr>
+                                    <th>Status</th>
+                                    <td>
                                 <span class="badge bg-warning"
                                       th:if="${loanApplication.status.name() == 'PENDING'}">Pending</span>
 
-                                    <span class="badge bg-success"
-                                          th:if="${loanApplication.status.name() == 'APPROVED'}">Approved</span>
+                                        <span class="badge bg-success"
+                                              th:if="${loanApplication.status.name() == 'APPROVED'}">Approved</span>
 
-                                    <span class="badge bg-danger"
-                                          th:if="${loanApplication.status.name() == 'REJECTED'}">Rejected</span>
+                                        <span class="badge bg-danger"
+                                              th:if="${loanApplication.status.name() == 'REJECTED'}">Rejected</span>
 
-                                    <span class="badge bg-secondary"
-                                          th:if="${loanApplication.status.name() == 'CANCELLED'}">Cancelled</span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <th>Requested Amount</th>
-                                <td th:text="${loanApplication.requestedAmount + ' EUR'}"></td>
-                            </tr>
-                            <tr>
-                                <th>Period</th>
-                                <td th:text="${loanApplication.periodMonths + ' months'}"></td>
-                            </tr>
-                            <tr>
-                                <th>Monthly Income</th>
-                                <td th:text="${loanApplication.monthlyIncome + ' EUR'}"></td>
-                            </tr>
-                            <tr>
-                                <th>Purpose</th>
-                                <td th:text="${#strings.replace(loanApplication.loanPurpose.name(), '_', ' ')}"></td>
-                            </tr>
-                            <tr>
-                                <th>Interest Rate</th>
-                                <td th:text="${loanApplication.interestRate + '%'}"></td>
-                            </tr>
-                            <tr>
-                                <th>Monthly Payment</th>
-                                <td th:text="${loanApplication.monthlyPayment + ' EUR'}"></td>
-                            </tr>
-                            <tr>
-                                <th>Total Repayment</th>
-                                <td th:text="${loanApplication.totalRepaymentAmount + ' EUR'}"></td>
-                            </tr>
-                            <tr>
-                                <th>Created At</th>
-                                <td th:text="${#temporals.format(loanApplication.createdAt, 'dd.MM.yyyy HH:mm', T(java.util.Locale).ENGLISH)}"></td>
-                            </tr>
+                                        <span class="badge bg-secondary"
+                                              th:if="${loanApplication.status.name() == 'CANCELLED'}">Cancelled</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Requested Amount</th>
+                                    <td th:text="${loanApplication.requestedAmount + ' EUR'}"></td>
+                                </tr>
+                                <tr>
+                                    <th>Period</th>
+                                    <td th:text="${loanApplication.periodMonths + ' months'}"></td>
+                                </tr>
+                                <tr>
+                                    <th>Monthly Income</th>
+                                    <td th:text="${loanApplication.monthlyIncome + ' EUR'}"></td>
+                                </tr>
+                                <tr>
+                                    <th>Purpose</th>
+                                    <td th:text="${#strings.replace(loanApplication.loanPurpose.name(), '_', ' ')}"></td>
+                                </tr>
+                                <tr>
+                                    <th>Interest Rate</th>
+                                    <td th:text="${loanApplication.interestRate + '%'}"></td>
+                                </tr>
+                                <tr>
+                                    <th>Monthly Payment</th>
+                                    <td th:text="${loanApplication.monthlyPayment + ' EUR'}"></td>
+                                </tr>
+                                <tr>
+                                    <th>Total Repayment</th>
+                                    <td th:text="${loanApplication.totalRepaymentAmount + ' EUR'}"></td>
+                                </tr>
+                                <tr>
+                                    <th>Created At</th>
+                                    <td th:text="${#temporals.format(loanApplication.createdAt, 'dd.MM.yyyy HH:mm', T(java.util.Locale).ENGLISH)}"></td>
+                                </tr>
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
 
-                        <div class="details-actions">
+                            <div class="details-actions">
 
-                            <a th:href="@{/applications}" class="btn btn-outline-light">Back</a>
+                                <a th:href="@{/applications}" class="btn btn-outline-light">Back</a>
 
-                            <a th:if="${loanApplication.status.name() == 'PENDING'}"
-                               th:href="@{/applications/{id}/edit(id=${loanApplication.id})}"
-                               class="btn btn-warning text-white">Edit Application</a>
+                                <a th:if="${loanApplication.status.name() == 'PENDING'}"
+                                   th:href="@{/applications/{id}/edit(id=${loanApplication.id})}"
+                                   class="btn btn-warning text-white">Edit Application</a>
 
-                            <form th:if="${loanApplication.status.name() == 'PENDING'}"
-                                  th:action="@{/applications/{id}/cancel(id=${loanApplication.id})}"
-                                  method="post">
-                                <button type="submit" class="btn btn-danger">Cancel Application</button>
-                            </form>
+                                <form th:if="${loanApplication.status.name() == 'PENDING'}"
+                                      th:action="@{/applications/{id}/cancel(id=${loanApplication.id})}"
+                                      method="post">
+                                    <button type="submit" class="btn btn-danger">Cancel Application</button>
+                                </form>
 
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </main>
 <div th:replace="~{fragments/footer :: footer}"></div>
 

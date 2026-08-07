@@ -12,61 +12,63 @@
         <h2 class="admin-title">Review Applications</h2>
         <div class="card admin-card">
             <div class="card-body">
-                <table class="table admin-table text-center">
-                    <thead>
-                    <tr>
-                        <th>User</th>
-                        <th>Email</th>
-                        <th>Identification number</th>
-                        <th>Product</th>
-                        <th>Amount</th>
-                        <th>Period</th>
-                        <th>Income</th>
-                        <th>Status</th>
-                        <th>Created</th>
-                        <th>Actions</th>
-                    </tr>
-                    </thead>
+                <div class="table-responsive">
+                    <table class="table admin-table text-center">
+                        <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Email</th>
+                            <th>Identification number</th>
+                            <th>Product</th>
+                            <th>Amount</th>
+                            <th>Period</th>
+                            <th>Income</th>
+                            <th>Status</th>
+                            <th>Created</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
 
-                    <tbody>
-                    <tr th:each="loanApplication : ${applications}">
-                        <td th:text="${loanApplication.userFullName}"></td>
-                        <td th:text="${loanApplication.userEmail}"></td>
-                        <td th:text="${loanApplication.userIdentificationNumber}"></td>
-                        <td th:text="${loanApplication.loanProductName}"></td>
-                        <td th:text="${loanApplication.requestedAmount + ' EUR'}"></td>
-                        <td th:text="${loanApplication.periodMonths + ' months'}"></td>
-                        <td th:text="${loanApplication.monthlyIncome + ' EUR'}"></td>
-                        <td>
+                        <tbody>
+                        <tr th:each="loanApplication : ${applications}">
+                            <td th:text="${loanApplication.userFullName}"></td>
+                            <td th:text="${loanApplication.userEmail}"></td>
+                            <td th:text="${loanApplication.userIdentificationNumber}"></td>
+                            <td th:text="${loanApplication.loanProductName}"></td>
+                            <td th:text="${loanApplication.requestedAmount + ' EUR'}"></td>
+                            <td th:text="${loanApplication.periodMonths + ' months'}"></td>
+                            <td th:text="${loanApplication.monthlyIncome + ' EUR'}"></td>
+                            <td>
                         <span class="badge bg-warning"
                               th:if="${loanApplication.status.name() == 'PENDING'}">Pending</span>
 
-                            <span class="badge bg-success"
-                                  th:if="${loanApplication.status.name() == 'APPROVED'}">Approved</span>
+                                <span class="badge bg-success"
+                                      th:if="${loanApplication.status.name() == 'APPROVED'}">Approved</span>
 
-                            <span class="badge bg-danger"
-                                  th:if="${loanApplication.status.name() == 'REJECTED'}">Rejected</span>
+                                <span class="badge bg-danger"
+                                      th:if="${loanApplication.status.name() == 'REJECTED'}">Rejected</span>
 
-                            <span class="badge bg-secondary"
-                                  th:if="${loanApplication.status.name() == 'CANCELLED'}">Cancelled</span>
-                        </td>
-                        <td th:text="${#temporals.format(loanApplication.createdAt, 'dd.MM.yyyy HH:mm', T(java.util.Locale).ENGLISH)}"></td>
-                        <td>
-                            <div th:if="${loanApplication.status.name() == 'PENDING'}" class="admin-actions">
-                                <form th:action="@{/admin/applications/{id}/approve(id=${loanApplication.id})}"
-                                      method="post">
-                                    <button class="btn btn-success btn-sm">Approve</button>
-                                </form>
+                                <span class="badge bg-secondary"
+                                      th:if="${loanApplication.status.name() == 'CANCELLED'}">Cancelled</span>
+                            </td>
+                            <td th:text="${#temporals.format(loanApplication.createdAt, 'dd.MM.yyyy HH:mm', T(java.util.Locale).ENGLISH)}"></td>
+                            <td>
+                                <div th:if="${loanApplication.status.name() == 'PENDING'}" class="admin-actions">
+                                    <form th:action="@{/admin/applications/{id}/approve(id=${loanApplication.id})}"
+                                          method="post">
+                                        <button class="btn btn-success btn-sm">Approve</button>
+                                    </form>
 
-                                <form th:action="@{/admin/applications/{id}/reject(id=${loanApplication.id})}"
-                                      method="post">
-                                    <button class="btn btn-danger btn-sm">Reject</button>
-                                </form>
-                            </div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                                    <form th:action="@{/admin/applications/{id}/reject(id=${loanApplication.id})}"
+                                          method="post">
+                                        <button class="btn btn-danger btn-sm">Reject</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

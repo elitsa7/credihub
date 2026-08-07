@@ -81,30 +81,30 @@
     background: transparent !important;
 }
 
-.details-table{
-    margin:0;
-    color:white;
-    background:transparent !important;
+.details-table {
+    margin: 0;
+    color: white;
+    background: transparent !important;
 }
 
 .details-table,
 .details-table tbody,
 .details-table tr,
 .details-table th,
-.details-table td{
-    background:transparent !important;
+.details-table td {
+    background: transparent !important;
 }
 
-.details-table th{
-    color:#7cb7ff;
-    width:35%;
-    border-color:rgba(255,255,255,.08);
-    font-weight:600;
+.details-table th {
+    color: #7cb7ff;
+    width: 35%;
+    border-color: rgba(255, 255, 255, .08);
+    font-weight: 600;
 }
 
-.details-table td{
-    color:white;
-    border-color:rgba(255,255,255,.08);
+.details-table td {
+    color: white;
+    border-color: rgba(255, 255, 255, .08);
 }
 
 .details-actions {
@@ -146,6 +146,7 @@
 
     .applications-table {
         font-size: .9rem;
+        min-width: 850px;
     }
 
     .details-actions {

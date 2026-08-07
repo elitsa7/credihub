@@ -7,7 +7,7 @@
 
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 
-<main class="applications-section">
+<main class="applications-section flex-grow-1">
     <div class="container">
         <h2 class="applications-title">My Applications</h2>
 
@@ -22,41 +22,42 @@
 
         <div th:unless="${applications.isEmpty()}" class="card applications-card">
             <div class="card-body">
-                <table>
-                       class="table applications-table text-center align-middle">
-                    <thead>
-                    <tr>
-                        <th>Product</th>
-                        <th>Amount</th>
-                        <th>Period</th>
-                        <th>Status</th>
-                        <th>Created</th>
-                        <th>Details</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="loanApplication : ${applications}">
-                        <td th:text="${loanApplication.loanProductName}"></td>
-                        <td th:text="${loanApplication.requestedAmount}"></td>
-                        <td th:text="${loanApplication.periodMonths}"></td>
-                        <td>
+                <div class="table-responsive">
+                    <table class="table applications-table text-center align-middle">
+                        <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Amount</th>
+                            <th>Period</th>
+                            <th>Status</th>
+                            <th>Created</th>
+                            <th>Details</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="loanApplication : ${applications}">
+                            <td th:text="${loanApplication.loanProductName}"></td>
+                            <td th:text="${loanApplication.requestedAmount}"></td>
+                            <td th:text="${loanApplication.periodMonths}"></td>
+                            <td>
                 <span class="badge bg-warning"
                       th:if="${loanApplication.status.name() == 'PENDING'}">Pending</span>
-                            <span class="badge bg-success"
-                                  th:if="${loanApplication.status.name() == 'APPROVED'}">Approved</span>
-                            <span class="badge bg-danger"
-                                  th:if="${loanApplication.status.name() == 'REJECTED'}">Rejected</span>
-                            <span class="badge bg-secondary"
-                                  th:if="${loanApplication.status.name() == 'CANCELLED'}">Cancelled</span>
-                        </td>
-                        <td th:text="${#temporals.format(loanApplication.createdAt, 'dd MMM yyyy HH:mm', T(java.util.Locale).ENGLISH)}"></td>
-                        <td class="applications-actions">
-                            <a th:href="@{/applications/{id}(id=${loanApplication.id})}"
-                               class="btn btn-primary btn-sm">View</a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                                <span class="badge bg-success"
+                                      th:if="${loanApplication.status.name() == 'APPROVED'}">Approved</span>
+                                <span class="badge bg-danger"
+                                      th:if="${loanApplication.status.name() == 'REJECTED'}">Rejected</span>
+                                <span class="badge bg-secondary"
+                                      th:if="${loanApplication.status.name() == 'CANCELLED'}">Cancelled</span>
+                            </td>
+                            <td th:text="${#temporals.format(loanApplication.createdAt, 'dd MMM yyyy HH:mm', T(java.util.Locale).ENGLISH)}"></td>
+                            <td class="applications-actions">
+                                <a th:href="@{/applications/{id}(id=${loanApplication.id})}"
+                                   class="btn btn-primary btn-sm">View</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

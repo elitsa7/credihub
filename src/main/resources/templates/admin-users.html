@@ -7,45 +7,47 @@
 
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 
-<main class="admin-section">
+<main class="admin-section flex-grow-1">
     <div class="container">
         <h2 class="admin-title">Roles</h2>
         <div class="card admin-card">
             <div class="card-body">
-                <table class="table admin-table text-center">
-                    <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                        <th>Actions</th>
-                    </tr>
-                    </thead>
+                <div class="table-responsive">
+                    <table class="table admin-table text-center">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
 
-                    <tbody>
-                    <tr th:each="user : ${users}">
-                        <td th:text="${user.fullName}"></td>
-                        <td th:text="${user.email}"></td>
-                        <td th:text="${user.role}"></td>
-                        <td>
-                            <form th:if="${user.role.name() == 'USER'}"
-                                  th:action="@{/admin/users/{id}/make-moderator(id=${user.id})}"
-                                  class="admin-actions"
-                                  method="post">
-                                <button class="btn btn-success btn-sm">Make Moderator</button>
-                            </form>
+                        <tbody>
+                        <tr th:each="user : ${users}">
+                            <td th:text="${user.fullName}"></td>
+                            <td th:text="${user.email}"></td>
+                            <td th:text="${user.role}"></td>
+                            <td>
+                                <form th:if="${user.role.name() == 'USER'}"
+                                      th:action="@{/admin/users/{id}/make-moderator(id=${user.id})}"
+                                      class="admin-actions"
+                                      method="post">
+                                    <button class="btn btn-success btn-sm">Make Moderator</button>
+                                </form>
 
-                            <form th:if="${user.role.name() == 'MODERATOR'}"
-                                  th:action="@{/admin/users/{id}/remove-moderator(id=${user.id})}"
-                                  class="admin-actions"
-                                  method="post">
+                                <form th:if="${user.role.name() == 'MODERATOR'}"
+                                      th:action="@{/admin/users/{id}/remove-moderator(id=${user.id})}"
+                                      class="admin-actions"
+                                      method="post">
 
-                                <button class="btn btn-danger btn-sm">Remove Moderator</button>
-                            </form>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                                    <button class="btn btn-danger btn-sm">Remove Moderator</button>
+                                </form>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

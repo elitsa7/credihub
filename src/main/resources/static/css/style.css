@@ -81,6 +81,15 @@ body {
     box-shadow: 0 0 0 0.15rem rgba(37, 99, 235, 0.2);
 }
 
+.table-responsive::-webkit-scrollbar {
+    height: 6px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, .2);
+    border-radius: 10px;
+}
+
 .footer {
     background-color: #0f172a;
     backdrop-filter: blur(10px);
