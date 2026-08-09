@@ -6,32 +6,100 @@ CrediHub is a full-stack digital loan management platform built with **Java 17**
 
 The platform covers the complete loan lifecycle — from loan calculation and application submission to application review, loan creation, repayment scheduling, and installment payments.
 
+[![Java](https://img.shields.io/badge/Java-17-orange?logo=openjdk)](https://www.oracle.com/java/)
+
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.0-brightgreen?logo=springboot)](https://spring.io/projects/spring-boot)
+
+[![Spring Security](https://img.shields.io/badge/Spring%20Security-brightgreen?logo=springsecurity)](https://spring.io/projects/spring-security)
+
+[![Spring Data JPA](https://img.shields.io/badge/Spring%20Data%20JPA-green?logo=spring)](https://spring.io/projects/spring-data-jpa)
+
+[![Thymeleaf](https://img.shields.io/badge/Thymeleaf-green?logo=thymeleaf)](https://www.thymeleaf.org/)
+
+[![MySQL](https://img.shields.io/badge/MySQL-blue?logo=mysql)](https://www.mysql.com/)
+
+[![Bootstrap](https://img.shields.io/badge/Bootstrap-5-purple?logo=bootstrap)](https://getbootstrap.com/)
+
+[![Stripe](https://img.shields.io/badge/Stripe-payments-635bff?logo=stripe)](https://stripe.com/)
+
+[![Azure](https://img.shields.io/badge/Azure-App%20Service-blue?logo=microsoftazure)](https://azure.microsoft.com/)
+
+[![Maven](https://img.shields.io/badge/Maven-build-C71A36?logo=apachemaven)](https://maven.apache.org/)
+
+[![JUnit](https://img.shields.io/badge/JUnit-5-green?logo=junit5)](https://junit.org/junit5/)
+
+[![GitHub Actions](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-2088FF?logo=githubactions)](https://github.com/features/actions)
+
 ---
 
-## 🎓 Evaluation / Live Demo
+## 📑 Table of Contents
+
+- [🌍 Live Demo](#-live-demo)
+
+- [📖 About the Project](#-about-the-project)
+
+- [✨ Main Features](#-main-features)
+
+- [🔐 Authentication & Authorization](#-authentication--authorization)
+
+- [🔑 Administrator Initialization](#-administrator-initialization)
+
+- [🔄 Loan Lifecycle](#-loan-lifecycle)
+
+- [💳 Payment Service](#-payment-service)
+
+- [🧪 Testing](#-testing)
+
+- [📸 Screenshots](#-screenshots)
+
+- [⚙️ Local Setup](#-local-setup)
+
+- [💳 Local Payment Testing](#-local-payment-testing)
+
+- [💳 Stripe Test Cards](#-stripe-test-cards)
+
+- [☁️ Azure Deployment](#-azure-deployment)
+
+- [📡 Payment Service API](#-payment-service-api)
+
+- [🔮 Future Improvements](#-future-improvements)
+
+- [🔗 Related Project](#-related-project)
+
+- [👩‍💻 Author](#-author)
+
+---
+
+# 🌍 Live Demo
 
 The application is deployed and ready to use:
 
 **Live Demo:**  
+
 https://credihub-dhcmagcdhpb8dca7.uaenorth-01.azurewebsites.net/
 
 No Stripe account or Stripe configuration is required from the evaluator.
 
-The live environment is already configured with the required application, database, Payment Service, and Stripe settings.
+The live environment is already configured with the application, database, Payment Service, and Stripe settings.
 
 ### Administrator account
 
 ```text
+
 Email:
+
 admin@credihub.com
+
+Password:
+
+Admin123!
+
 ```
 
-The administrator password is provided separately for evaluation and is not stored in the repository.
-For the purpose of the live demo, a demo admin password will be provided
-```text
-Password:
-Admin123!
-```
+The demo administrator credentials are provided for evaluation purposes.  
+
+The password is not stored in the source code.
+
 ---
 
 # 📖 About the Project
@@ -39,27 +107,45 @@ Admin123!
 CrediHub simulates a digital lending platform where users can:
 
 - Register and authenticate
+
 - Manage their profile
+
 - Calculate loan repayments
+
 - Submit loan applications
+
 - Track application status
+
 - View approved loans
+
+- View rejected loans
+
 - View repayment schedules
+
 - Pay installments
+
 - Track their remaining loan balance
 
 The application also provides role-based administration for:
 
 - Reviewing applications
+
 - Approving and rejecting applications
+
 - Managing users and moderator roles
+
 - Managing loan products
 
 Payment functionality is separated into a dedicated **Payment Service microservice**.
 
-### Payment Service repository
+___
+
+# 🔗 Related Project
+
+### CrediHub Payment Service
 
 https://github.com/elitsa7/credihub-payment-service
+
 
 ---
 
@@ -70,8 +156,11 @@ https://github.com/elitsa7/credihub-payment-service
 Unauthenticated visitors can:
 
 - View the home page
+
 - Use the loan calculator
+
 - Register
+
 - Login
 
 ## 👥 Registered Users
@@ -79,15 +168,25 @@ Unauthenticated visitors can:
 Authenticated users can:
 
 - View and edit their profile
+
 - Submit loan applications
+
 - Edit pending applications
+
 - Cancel pending applications
+
 - View applications and application details
+
 - View approved loans
+
 - View rejected loans
+
 - View repayment schedules
+
 - Track installment statuses
+
 - Pay the next available installment
+
 - Track remaining loan balance
 
 ## 🛡️ Moderator
@@ -95,8 +194,11 @@ Authenticated users can:
 Moderators can:
 
 - View submitted applications
+
 - Review application details
+
 - Approve pending applications
+
 - Reject pending applications
 
 ## 👑 Administrator
@@ -104,12 +206,17 @@ Moderators can:
 Administrators can:
 
 - Review applications
+
 - Approve and reject applications
+
 - Manage users
+
 - Promote users to Moderator
+
 - Remove Moderator roles
-- Manage loan products
+
 - Edit loan products
+
 - Activate and deactivate loan products
 
 ---
@@ -121,18 +228,27 @@ CrediHub uses **Spring Security** with role-based authorization.
 Supported roles:
 
 ```text
+
 USER
+
  └── Customer functionality
 
 MODERATOR
+
  ├── Customer functionality
+
  └── Application review
 
 ADMIN
+
  ├── Customer functionality
+
  ├── Application review
+
  ├── User management
+
  └── Loan product management
+
 ```
 
 Passwords are encoded using Spring Security's password encoder.
@@ -146,446 +262,307 @@ A default administrator is initialized when the application starts if the config
 Administrator email:
 
 ```text
+
 admin@credihub.com
+
 ```
 
-The password is supplied through:
+The administrator password is configured using:
 
 ```text
+
 ADMIN_PASSWORD
+
 ```
 
 Example:
 
 ```text
+
 ADMIN_PASSWORD=your-secure-password
+
 ```
 
 The password is intentionally kept outside the source code.
 
 ---
 
-# 🔗 Payment Service
+# 🔄 Loan Lifecycle
 
-The dedicated microservice is available in a separate repository:
+```text
 
-**https://github.com/elitsa7/credihub-payment-service**
+Register / Login
 
-It is responsible for:
+       │
 
-- Loan accounts
-- Installments
-- Payments
-- Payment gateways
-- Stripe Checkout
-- Stripe webhooks
-- Payment state management
-- Overdue installment processing
+       ▼
+
+Loan Calculator
+
+       │
+
+       ▼
+
+Submit Application
+
+       │
+
+       ▼
+
+PENDING
+
+       │
+
+       ▼
+
+Moderator / Admin Review
+
+       │
+
+       ├──────────────► REJECTED
+
+       │
+
+       ▼
+
+APPROVED
+
+       │
+
+       ▼
+
+Loan Account Created
+
+       │
+
+       ▼
+
+Installments Generated
+
+       │
+
+       ▼
+
+Installment Becomes Payable
+
+       │
+
+       ▼
+
+Payment
+
+       │
+
+       ▼
+
+Installment PAID
+
+       │
+
+       ▼
+
+Remaining Balance Updated
+
+       │
+
+       ▼
+
+Next Installment
+
+       │
+
+       ▼
+
+All Installments Paid
+
+       │
+
+       ▼
+
+Loan CLOSED
+
+```
 
 ---
 
-# 🔗 Communication Between Services
+# 💳 Payment Service
 
-CrediHub communicates with the Payment Service through **Spring Cloud OpenFeign**.
+CrediHub uses a dedicated **Payment Service microservice** for loan accounts, installments, payments, and Stripe integration.
 
-Main operations include:
+Communication between the two applications is handled through **Spring Cloud OpenFeign**.
 
 ```text
+
 CrediHub
+
    │
-   ├── Create Loan Account
-   ├── Get User Loans
-   ├── Get Loan Installments
-   └── Create Checkout Session
-             │
-             ▼
-      Payment Service
+
+   │ OpenFeign
+
+   ▼
+
+Payment Service
+
+   │
+
+   ├── Loan Accounts
+
+   ├── Installments
+
+   ├── Payments
+
+   └── Stripe Checkout
+
+          │
+
+          ▼
+
+       Stripe
+
 ```
 
-Internal requests include:
+Internal communication is secured using:
 
 ```text
+
 X-API-KEY
+
 ```
 
 The shared key is configured through:
 
 ```text
+
 PAYMENT_SERVICE_API_KEY
+
 ```
 
----
+The Payment Service is available in a separate repository:
 
-# 🔄 Loan Lifecycle
+https://github.com/elitsa7/credihub-payment-service
+
+### Payment Flow
 
 ```text
-Register / Login
-       │
-       ▼
-Loan Calculator
-       │
-       ▼
-Submit Application
-       │
-       ▼
-PENDING
-       │
-       ▼
-Moderator / Admin Review
-       │
-       ├──────────────► REJECTED
-       │
-       ▼
-APPROVED
-       │
-       ▼
+
+Loan Approved
+
+     │
+
+     ▼
+
 Loan Account Created
-       │
-       ▼
+
+     │
+
+     ▼
+
 Installments Generated
-       │
-       ▼
-Installment Becomes Payable
-       │
-       ▼
-Payment
-       │
-       ▼
-Installment PAID
-       │
-       ▼
-Remaining Balance Updated
-       │
-       ▼
-Next Installment
-       │
-       ▼
-All Installments Paid
-       │
-       ▼
-Loan CLOSED
-```
 
----
+     │
 
-# 🧮 Loan Calculator
+     ▼
 
-The home page contains a loan calculator.
+Installment Due
 
-Users select:
+     │
 
-- Loan product
-- Requested amount
-- Repayment period
+     ▼
 
-The calculator displays:
-
-- Annual interest rate
-- Monthly payment
-- Total repayment amount
-
-The requested amount and repayment period are validated against the selected loan product.
-
----
-
-# 📝 Loan Applications
-
-Users can submit applications for active loan products.
-
-Applications contain information such as:
-
-- Requested amount
-- Repayment period
-- Monthly income
-- Loan purpose
-- Selected loan product
-
-New applications start with:
-
-```text
-PENDING
-```
-
-Pending applications can be edited or cancelled by their owner.
-
----
-
-# 🛡️ Application Review
-
-Moderators and administrators can review submitted applications.
-
-Application status flow:
-
-```text
-PENDING
-   │
-   ├── APPROVED
-   │
-   └── REJECTED
-```
-
-When an application is approved:
-
-1. The application status becomes `APPROVED`.
-2. CrediHub requests a loan account from the Payment Service.
-3. The Payment Service creates the loan account.
-4. The repayment schedule is generated.
-5. Installments become available according to the schedule.
-
----
-
-# 💰 Loan Accounts
-
-The Payment Service creates a loan account after application approval.
-
-A loan account contains information such as:
-
-- Application ID
-- User ID
-- Principal amount
-- Remaining balance
-- Annual interest rate
-- Monthly payment
-- Period in months
-- Start date
-- End date
-- Paid installment count
-- Loan status
-
-A newly created loan starts as:
-
-```text
-ACTIVE
-```
-
----
-
-# 📅 Repayment Schedule
-
-Installments are generated automatically when a loan account is created.
-
-Each installment contains:
-
-- Installment number
-- Amount
-- Due date
-- Status
-- Payment date
-
-Installment statuses include:
-
-```text
-PENDING
-DUE
-PAID
-OVERDUE
-```
-
-Only the first pending installment can be paid.
-
----
-
-# 💳 Payment Modes
-
-The Payment Service uses profile-specific payment and webhook gateways.
-
-```text
-PaymentGateway
-      │
-      ├── MockPaymentGateway
-      │       └── dev / test
-      │
-      └── StripePaymentGateway
-              └── prod
-
-
-StripeWebhookGateway
-      │
-      ├── MockStripeWebhookGateway
-      │       └── dev / test
-      │
-      └── StripeWebhookGatewayImpl
-              └── prod
-```
-
----
-
-## 🖥️ Local Development Payments
-
-Local development uses:
-
-```text
-MockPaymentGateway
-```
-
-Therefore, local development does **not** require:
-
-- A Stripe account
-- Stripe API keys
-- A Stripe webhook
-- Stripe test cards
-
-When a local installment is paid, the Payment Service completes the payment locally and updates the installment and loan balance.
-
----
-
-## 🌐 Live Demo Payments
-
-The deployed production environment uses:
-
-```text
-StripePaymentGateway
-```
-
-Stripe is already configured in the live environment.
-
-The evaluator does **not** need to create a Stripe account or configure Stripe.
-
-The production flow is:
-
-```text
-User
- │
- ▼
-CrediHub
- │
- ▼
-Payment Service
- │
- ▼
 Stripe Checkout
- │
- ▼
+
+     │
+
+     ▼
+
 Stripe Webhook
- │
- ▼
-Payment Service
- │
- ▼
-Installment = PAID
- │
- ▼
-Loan balance updated
+
+     │
+
+     ▼
+
+Installment PAID
+
+     │
+
+     ▼
+
+Loan Balance Updated
+
 ```
+
+The Payment Service handles:
+
+- Loan accounts
+
+- Installments
+
+- Payments
+
+- Stripe Checkout
+
+- Stripe webhooks
+
+- Payment state management
+
+- Overdue installment processing
 
 ---
 
-# 💳 Stripe Test Cards
+# 🧪 Testing
 
-For a Stripe test-mode payment, use:
+The project includes:
 
-### Successful payment
+- Unit tests
 
-```text
-4242 4242 4242 4242
+- Controller/API tests
+
+- Integration tests
+
+- Security tests
+
+Technologies used:
+
+- JUnit 5
+
+- Mockito
+
+- Spring Boot Test
+
+- MockMvc
+
+- H2
+
+- JaCoCo
+
+Run tests:
+
+```bash
+
+mvn test
+
 ```
 
-Expiry: any future date  
-CVC: any 3 digits
+Generate the JaCoCo report:
 
-### Declined payment
+```bash
 
-```text
-4000 0000 0000 9995
+mvn verify
+
 ```
-
-### 3D Secure authentication
-
-```text
-4000 0025 0000 3155
-```
-
-These are Stripe test cards and do not charge real money.
-
-> The test cards apply only when the deployed Stripe integration is running in Stripe test mode.
-
----
-
-# 🔔 Stripe Webhook
-
-The Payment Service exposes:
-
-```text
-POST /api/v1/payments/webhook
-```
-
-Stripe sends Checkout events to this endpoint.
-
-The webhook signature is verified before the event is processed.
-
-The application handles:
-
-```text
-checkout.session.completed
-```
-
-After successful payment:
-
-1. Payment becomes `SUCCESS`.
-2. Payment timestamp is stored.
-3. Installment becomes `PAID`.
-4. Installment payment date is stored.
-5. Paid installment count is increased.
-6. Remaining loan balance is reduced.
-7. When all installments are paid, the loan becomes `CLOSED`.
-
----
-
-# ⏰ Scheduled Processing
-
-CrediHub contains a loan application scheduler that runs hourly.
-
-The Payment Service contains an installment scheduler that runs daily at midnight.
-
-The Payment Service scheduler checks installment due dates and marks overdue installments accordingly.
-
----
-
-# ⚡ Caching
-
-CrediHub caches loan products.
-
-The Payment Service caches:
-
-```text
-userLoans
-loanInstallments
-```
-
-Relevant caches are evicted when loan or payment data changes.
-
----
-
-# 🛠️ Technology Stack
-
-| Category | Technology |
-|---|---|
-| Language | Java 17 |
-| Framework | Spring Boot 3.4.0 |
-| Security | Spring Security |
-| ORM | Hibernate / Spring Data JPA |
-| Database | MySQL |
-| Frontend | Thymeleaf |
-| UI | Bootstrap 5 |
-| Styling | CSS3 |
-| Microservice Communication | Spring Cloud OpenFeign |
-| Payments | Stripe Java SDK |
-| Build | Maven |
-| Testing | JUnit 5, Mockito, MockMvc |
-| Test Database | H2 |
-| Coverage | JaCoCo |
-| Cloud | Microsoft Azure App Service |
-| CI/CD | GitHub Actions |
 
 ---
 
 # 📸 Screenshots
+
 ## 🏠 Home Page
 
 <details>
+
 <summary>📷 View Screenshot</summary>
 
-![home.png](screenshots/home.png)
+![Home Page](screenshots/home.png)
+
 ![Home Page](screenshots/home2.png)
 
 </details>
@@ -593,6 +570,7 @@ Relevant caches are evicted when loan or payment data changes.
 ## 🧮 Loan Calculator
 
 <details>
+
 <summary>📷 View Screenshot</summary>
 
 ![Loan Calculator](screenshots/calculator.png)
@@ -602,6 +580,7 @@ Relevant caches are evicted when loan or payment data changes.
 ## 📝 Create Loan Application
 
 <details>
+
 <summary>📷 View Screenshot</summary>
 
 ![Create Loan Application](screenshots/create-application.png)
@@ -611,6 +590,7 @@ Relevant caches are evicted when loan or payment data changes.
 ## 📋 My Applications
 
 <details>
+
 <summary>📷 View Screenshot</summary>
 
 ![My Applications](screenshots/my-applications.png)
@@ -620,6 +600,7 @@ Relevant caches are evicted when loan or payment data changes.
 ## 🔎 Application Details
 
 <details>
+
 <summary>📷 View Screenshot</summary>
 
 ![Application Details](screenshots/application-details.png)
@@ -629,6 +610,7 @@ Relevant caches are evicted when loan or payment data changes.
 ## 💰 My Loans
 
 <details>
+
 <summary>📷 View Screenshot</summary>
 
 ![My Loans](screenshots/my-loans.png)
@@ -638,6 +620,7 @@ Relevant caches are evicted when loan or payment data changes.
 ## 📅 Repayment Schedule
 
 <details>
+
 <summary>📷 View Screenshot</summary>
 
 ![Repayment Schedule](screenshots/repayment-schedule.png)
@@ -647,9 +630,11 @@ Relevant caches are evicted when loan or payment data changes.
 ## 💳 Stripe Checkout
 
 <details>
+
 <summary>📷 View Screenshot</summary>
 
 ![Stripe Checkout](screenshots/stripe.png)
+
 ![Successful Payment](screenshots/stripe-success.png)
 
 </details>
@@ -657,6 +642,7 @@ Relevant caches are evicted when loan or payment data changes.
 ## 👑 Administration Home Page
 
 <details>
+
 <summary>📷 View Screenshot</summary>
 
 ![Administration](screenshots/home-admin.png)
@@ -666,6 +652,7 @@ Relevant caches are evicted when loan or payment data changes.
 ## 🛡️ Review Applications
 
 <details>
+
 <summary>📷 View Screenshot</summary>
 
 ![Review Applications](screenshots/review-applications.png)
@@ -675,6 +662,7 @@ Relevant caches are evicted when loan or payment data changes.
 ## 👥 User Management
 
 <details>
+
 <summary>📷 View Screenshot</summary>
 
 ![User Management](screenshots/roles.png)
@@ -684,6 +672,7 @@ Relevant caches are evicted when loan or payment data changes.
 ## 🏦 Loan Products
 
 <details>
+
 <summary>📷 View Screenshot</summary>
 
 ![Loan Products](screenshots/products.png)
@@ -692,24 +681,16 @@ Relevant caches are evicted when loan or payment data changes.
 
 ---
 
-# ⚙️ Spring Profiles
+# ⚙️ Local Setup
 
-Available profiles:
-
-```text
-dev
-test
-prod
-```
-
----
-
-# 🖥️ Local Setup
 ## 1. Clone CrediHub
 
 ```bash
+
 git clone https://github.com/elitsa7/credihub.git
+
 cd credihub
+
 ```
 
 ## 2. Clone Payment Service
@@ -717,167 +698,202 @@ cd credihub
 In another terminal:
 
 ```bash
+
 git clone https://github.com/elitsa7/credihub-payment-service.git
+
 cd credihub-payment-service
+
 ```
 
 ---
 
-## 3. Configure CrediHub
+## 3. Configure Environment Variables
 
-The local `dev` profile uses:
+The local environment uses the `dev` profile.
 
-```text
-Host: localhost
-Port: 3306
-Database: credihub
-Username: root
-```
+The applications automatically create their required databases when they start.
 
-Set:
+### CrediHub
+
+Configure:
 
 ```text
+
 DB_PASSWORD
-```
 
-The Payment Service defaults to:
-
-```text
-PAYMENT_SERVICE_URL=http://localhost:8081
-```
-
-and:
-
-```text
-PAYMENT_SERVICE_API_KEY=test
-```
-
-The `application-properties` profile uses:
-
-The administrator password is configured using:
-
-```text
 ADMIN_PASSWORD
+
 ```
 
 Example:
 
 ```text
+
 DB_PASSWORD=your-mysql-password
+
 ADMIN_PASSWORD=your-admin-password
-PAYMENT_SERVICE_URL=http://localhost:8081
-PAYMENT_SERVICE_API_KEY=test
+
 ```
 
----
+### Payment Service
 
-## 4. Configure Payment Service
-
-The local `dev` profile uses:
+Configure:
 
 ```text
-Host: localhost
-Port: 3306
-Database: credihub_payment
-Username: root
-```
 
-Set:
-
-```text
 DB_PASSWORD
-PAYMENT_SERVICE_API_KEY=test
+
+```
+
+Example:
+
+```text
+
+DB_PASSWORD=your-mysql-password
+
 ```
 
 No Stripe configuration is required for local development.
 
 ---
 
-## 5. Start Payment Service
+## 4. Start Payment Service
+
+The Payment Service runs on port `8081`.
 
 ```bash
+
 cd credihub-payment-service
+
 mvn clean install
+
 mvn spring-boot:run
+
 ```
 
 Payment Service:
 
 ```text
+
 http://localhost:8081
+
 ```
 
 ---
 
-## 6. Start CrediHub
+## 5. Start CrediHub
 
-In the main project:
+The main CrediHub application runs on port `8080`.
 
 ```bash
+
 cd credihub
+
 mvn clean install
+
 mvn spring-boot:run
+
 ```
 
 CrediHub:
 
 ```text
+
 http://localhost:8080
+
+```
+
+The applications should be running simultaneously:
+
+```text
+
+CrediHub
+
+http://localhost:8080
+
+        │
+
+        │ OpenFeign
+
+        ▼
+
+Payment Service
+
+http://localhost:8081
+
 ```
 
 ---
 
-# 🧪 Local Payment Testing
+# 💳 Local Payment Testing
 
-With the default `dev` profile:
+The `dev` profile uses:
 
 ```text
+
 MockPaymentGateway
+
 ```
 
-is used.
+Therefore, local development does not require:
 
-No Stripe account, keys, webhook or test card is needed.
+- A Stripe account
 
-The local payment process completes through the mock gateway and updates:
+- Stripe API keys
+
+- A Stripe webhook
+
+- Stripe test cards
+
+When a local installment is paid, the Payment Service completes the payment through the mock gateway and updates:
 
 ```text
+
 Payment → SUCCESS
+
 Installment → PAID
+
 Loan balance → Updated
+
 ```
 
 ---
 
-# 🧪 Testing
+# 💳 Stripe Test Cards
 
-The project includes:
+The deployed application uses Stripe in test mode.
 
-- Unit tests
-- Controller/API tests
-- Integration tests
-- Security tests
+These Stripe test cards do not charge real money.
 
-Technologies used:
+### Successful payment
 
-- JUnit 5
-- Mockito
-- Spring Boot Test
-- MockMvc
-- H2
-- JaCoCo
+```text
 
-Run tests:
+4242 4242 4242 4242
 
-```bash
-mvn test
 ```
 
-Generate the JaCoCo report:
+Expiry: any future date  
 
-```bash
-mvn verify
+CVC: any 3 digits
+
+### Declined payment
+
+```text
+
+4000 0000 0000 9995
+
 ```
+
+### 3D Secure authentication
+
+```text
+
+4000 0025 0000 3155
+
+```
+
+> These cards apply when the deployed Stripe integration is running in Stripe test mode.
 
 ---
 
@@ -890,19 +906,33 @@ Deployment is automated using GitHub Actions.
 The pipeline:
 
 ```text
+
 Git Push
+
     │
+
     ▼
+
 GitHub Actions
+
     │
+
     ├── Checkout
+
     ├── Setup Java 17
+
     ├── Maven Build
+
     ├── Package JAR
+
     └── Upload Artifact
+
             │
+
             ▼
+
       Azure App Service
+
 ```
 
 ---
@@ -914,21 +944,29 @@ The Payment Service exposes:
 ### Loan Accounts
 
 ```text
+
 GET  /api/v1/loan-accounts/user/{userId}
+
 POST /api/v1/loan-accounts
+
 ```
 
 ### Installments
 
 ```text
+
 GET  /api/v1/installments/loan/{loanAccountId}
+
 POST /api/v1/installments/{installmentId}/checkout
+
 ```
 
 ### Stripe Webhook
 
 ```text
+
 POST /api/v1/payments/webhook
+
 ```
 
 For complete microservice documentation:
@@ -942,22 +980,21 @@ https://github.com/elitsa7/credihub-payment-service
 Possible future improvements:
 
 - Email notifications
+
 - PDF loan contracts
+
 - Advanced administration dashboards
+
 - Payment history export
+
 - Additional payment providers
+
 - Two-factor authentication
+
 - More detailed analytics
+
 - Expanded reporting
-
----
-
-# 🔗 Related Project
-
-### CrediHub Payment Service
-
-https://github.com/elitsa7/credihub-payment-service
-
+  
 ---
 
 # 👩‍💻 Author
