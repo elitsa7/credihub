@@ -768,7 +768,7 @@ PAYMENT_SERVICE_API_KEY=test
 
 ---
 
-## 5. Configure Payment Service
+## 4. Configure Payment Service
 
 The local `dev` profile uses:
 
@@ -790,7 +790,7 @@ No Stripe configuration is required for local development.
 
 ---
 
-## 6. Start Payment Service
+## 5. Start Payment Service
 
 ```bash
 cd credihub-payment-service
@@ -806,7 +806,7 @@ http://localhost:8081
 
 ---
 
-## 7. Start CrediHub
+## 6. Start CrediHub
 
 In the main project:
 
