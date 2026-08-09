@@ -387,23 +387,26 @@ Only the first pending installment can be paid.
 
 # 💳 Payment Modes
 
-The Payment Service uses a gateway abstraction:
+The Payment Service uses profile-specific payment and webhook gateways.
 
 ```text
 PaymentGateway
       │
       ├── MockPaymentGateway
+      │       └── dev / test
       │
       └── StripePaymentGateway
+              └── prod
+
+
+StripeWebhookGateway
+      │
+      ├── MockStripeWebhookGateway
+      │       └── dev / test
+      │
+      └── StripeWebhookGatewayImpl
+              └── prod
 ```
-
-The implementation is selected by Spring profile.
-
-| Environment | Gateway | Stripe Required |
-|---|---|---|
-| `dev` | `MockPaymentGateway` | ❌ |
-| `test` | `MockPaymentGateway` | ❌ |
-| `prod` | `StripePaymentGateway` | ✅ |
 
 ---
 
